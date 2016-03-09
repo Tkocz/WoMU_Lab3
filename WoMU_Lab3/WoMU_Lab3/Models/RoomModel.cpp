@@ -11,5 +11,5 @@ int RoomModel::areaCm2() {
 }
 
 int RoomModel::volumeCm3() {
-    return (ceiling.widthCm * ceiling.heightCm * east.heightCm);
+    return (areaCm2() * east.heightCm);
 }

@@ -16,6 +16,8 @@ public:
 	int lengthCm;
 	int heightCm;
 
+    void* photo;
+
 private:
 
 };
