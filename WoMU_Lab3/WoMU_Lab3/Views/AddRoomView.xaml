@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="WoMU_Lab3.AddRoomView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WoMU_Lab3"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="5">
+        <Image Source="../Assets/images/triforce_bg2.png"/>
+        <StackPanel>
+            <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="5,15,5,5" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
+            <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="340"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
+            <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
+            <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
+            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Bredd" VerticalAlignment="Top"/>
+            <Slider x:Name="WidthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
+        </StackPanel>
+    </Grid>
+</Page>

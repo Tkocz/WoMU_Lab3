@@ -1,10 +1,10 @@
 ﻿//
-// AddWallView.xaml.cpp
-// Implementation of the AddWallView class
+// AddRoomView.xaml.cpp
+// Implementation of the AddRoomView class
 //
 
 #include "pch.h"
-#include "AddWallView.xaml.h"
+#include "AddRoomView.xaml.h"
 
 using namespace WoMU_Lab3;
 
@@ -19,7 +19,7 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-AddWallView::AddWallView()
+AddRoomView::AddRoomView()
 {
 	InitializeComponent();
 }

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="5">
         <Image Source="../Assets/images/triforce_bg2.png"/>
         <Slider x:Name="lengthSlider" HorizontalAlignment="Left" Margin="0,467,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
         <Slider x:Name="heightSlider" HorizontalAlignment="Left" Margin="0,528,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
