@@ -4,7 +4,7 @@
 
 #using <mscorlib.dll>
 
-class RoomModel {
+__gc class RoomModel {
 
 public:
 	RoomModel();
@@ -13,8 +13,8 @@ public:
     int areaCm2();
     int volumeCm3();
 
-	System::String^ title;
-	System::String^ description;
+	String^ title;
+	String^ description;
 
 	float longitude;
     float latitude,
