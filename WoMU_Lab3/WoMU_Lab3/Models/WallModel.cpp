@@ -5,6 +5,6 @@ WallModel::WallModel() {
 
 WallModel::~WallModel() = default;
 
-int WallModel::volume() {
-    return (ceiling.widthCm * ceiling.heightCm * east.heightCm);
+int WallModel::areaCm2() {
+    return (floor.lengthCm * floor.heightCm);
 }

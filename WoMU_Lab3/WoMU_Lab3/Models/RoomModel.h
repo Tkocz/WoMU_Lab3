@@ -10,7 +10,8 @@ public:
 	RoomModel();
     ~RoomModel();
 
-    volume();
+    int areaCm2();
+    int volumeCm3();
 
 	std::string title;
 	std::string description;

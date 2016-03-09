@@ -8,6 +8,8 @@ public:
 	WallModel();
     ~WallModel();
 
+    int areaCm2();
+
 	std::string title;
 	std::string description;
 
