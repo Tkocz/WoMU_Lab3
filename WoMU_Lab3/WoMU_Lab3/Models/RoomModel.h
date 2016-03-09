@@ -2,7 +2,7 @@
 
 #include "WallModel.h"
 
-#include <string>
+#using <mscorlib.dll>
 
 class RoomModel {
 
@@ -13,18 +13,18 @@ public:
     int areaCm2();
     int volumeCm3();
 
-	std::string title;
-	std::string description;
+	System::String^ title;
+	System::String^ description;
 
 	float longitude;
     float latitude,
 
-	WallModel ceiling;
-	WallModel floor;
-	WallModel east;
-	WallModel south;
-	WallModel north;
-	WallModel west;
+	WallModel^ ceiling;
+	WallModel^ floor;
+	WallModel^ east;
+	WallModel^ south;
+	WallModel^ north;
+	WallModel^ west;
 
 private:
 

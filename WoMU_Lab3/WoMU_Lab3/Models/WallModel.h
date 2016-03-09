@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#using <mscorlib.dll>
 
 class WallModel {
 
@@ -10,8 +10,8 @@ public:
 
     int areaCm2();
 
-	std::string title;
-	std::string description;
+	System::String^ title;
+	System::String^ description;
 
 	int lengthCm;
 	int heightCm;

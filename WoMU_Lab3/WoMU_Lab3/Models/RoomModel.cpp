@@ -7,7 +7,7 @@ RoomModel::RoomModel() {
 RoomModel::~RoomModel() = default;
 
 int RoomModel::areaCm2() {
-    return (floor.lengthCm * floor.heightCm);
+    return (floor->lengthCm * floor->heightCm);
 }
 
 int RoomModel::volumeCm3() {
