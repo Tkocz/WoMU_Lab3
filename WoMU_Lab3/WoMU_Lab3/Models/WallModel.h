@@ -2,7 +2,7 @@
 
 #using <mscorlib.dll>
 
-__gc class WallModel {
+public ref class WallModel {
 
 public:
 	WallModel();

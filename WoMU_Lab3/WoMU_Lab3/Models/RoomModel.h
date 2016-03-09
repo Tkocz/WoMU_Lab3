@@ -4,7 +4,7 @@
 
 #using <mscorlib.dll>
 
-__gc class RoomModel {
+public ref class RoomModel {
 
 public:
 	RoomModel();
@@ -17,7 +17,7 @@ public:
 	System::String^ description;
 
 	float longitude;
-    float latitude,
+    float latitude;
 
 	WallModel^ ceiling;
 	WallModel^ floor;
