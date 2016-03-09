@@ -13,8 +13,8 @@ public:
     int areaCm2();
     int volumeCm3();
 
-	String^ title;
-	String^ description;
+	System::String^ title;
+	System::String^ description;
 
 	float longitude;
     float latitude,
@@ -29,4 +29,3 @@ public:
 private:
 
 };
-
