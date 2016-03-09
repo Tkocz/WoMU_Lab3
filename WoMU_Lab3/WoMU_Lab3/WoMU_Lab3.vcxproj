@@ -145,12 +145,18 @@
     </ClInclude>
     <ClInclude Include="Models\RoomModel.h" />
     <ClInclude Include="Models\WallModel.h" />
+    <ClInclude Include="Views\AddWallView.xaml.h">
+      <DependentUpon>Views\AddWallView.xaml</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddWallView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -191,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="Models\RoomModel.cpp" />
     <ClCompile Include="Models\WallModel.cpp" />
+    <ClCompile Include="Views\AddWallView.xaml.cpp">
+      <DependentUpon>Views\AddWallView.xaml</DependentUpon>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

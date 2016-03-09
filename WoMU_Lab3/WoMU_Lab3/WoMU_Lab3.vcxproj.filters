@@ -72,5 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
+    <Page Include="Views\AddWallView.xaml" />
   </ItemGroup>
 </Project>
