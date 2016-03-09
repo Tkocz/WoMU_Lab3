@@ -1,23 +1,31 @@
 #pragma once
-#include <string>
-#include <Windows.h>
+
 #include "WallModel.h"
 
-ref class RoomModel sealed
-{
+#include <string>
+
+class RoomModel {
+
 public:
 	RoomModel();
-private:
+    ~RoomModel();
+
+    volume();
 
 	std::string title;
 	std::string description;
-	int roomVolume;
-	POINT coordinates;
+
+	float longitude;
+    float latitude,
+
 	WallModel ceiling;
 	WallModel floor;
 	WallModel east;
 	WallModel south;
 	WallModel north;
 	WallModel west;
+
+private:
+
 };
 
