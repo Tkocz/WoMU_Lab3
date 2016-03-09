@@ -4,7 +4,7 @@
 
 #using <mscorlib.dll>
 
-public ref class RoomModel {
+ref class RoomModel {
 
 public:
 	RoomModel();
