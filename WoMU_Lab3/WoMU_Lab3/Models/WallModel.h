@@ -1,13 +1,19 @@
 #pragma once
+
 #include <string>
-ref class WallModel sealed
-{
+
+class WallModel {
+
 public:
 	WallModel();
-private:
+    ~WallModel();
+
 	std::string title;
 	std::string description;
-	int length;
-	int height;
-};
 
+	int lengthCm;
+	int heightCm;
+
+private:
+
+};
