@@ -10,25 +10,25 @@ public:
     RoomModel();
     virtual ~RoomModel();
 
-    std::string& title      () { return title_;       }
-    std::string& description() { return description_; }
+    Platform::String^ title      () { return title_;       }
+    Platform::String^ description() { return description_; }
 
     float longitude() { return longitude_; }
-    float latitude()  { return latitude; }
+    float latitude()  { return latitude_; }
 
-    WallModel& ceiling  () { return ceiling_; }
-    WallModel& floor    () { return floor_;   }
-    WallModel& eastWall () { return east_;    }
-    WallModel& southWall() { return south_;   }
-    WallModel& northWall() { return north_;   }
-    WallModel& westWall () { return west_;    }
+    WallModel^ ceiling  () { return ceiling_; }
+    WallModel^ floor    () { return floor_;   }
+    WallModel^ eastWall () { return east_;    }
+    WallModel^ southWall() { return south_;   }
+    WallModel^ northWall() { return north_;   }
+    WallModel^ westWall () { return west_;    }
 
-    int areaCm2()   { return floor->lengthCm() * floor->heightCm(); }
-    int volumeCm3() { return areaCm2() * east->heightCm();          }
+    int areaCm2()   { return floor_->lengthCm() * floor_->heightCm(); }
+    int volumeCm3() { return areaCm2() * east_->heightCm();          }
 
 private:
-    std::unique_ptr<std::string> title_;
-    std::unique_ptr<std::string> description_;
+    Platform::String^ title_;
+    Platform::String^ description_;
 
     float longitude_;
     float latitude_;

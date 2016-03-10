@@ -9,8 +9,8 @@ public:
     WallModel();
     virtual ~WallModel();
 
-    std::string& title      () { return title_;       }
-    std::string& description() { return description_; }
+    Platform::String^ title      () { return title_;       }
+    Platform::String^ description() { return description_; }
 
     int heightCm() { return heightCm_; }
     int lengthCm() { return lengthCm_; }
@@ -19,8 +19,8 @@ public:
 
 private:
 
-    std::string* title_;
-    std::string* description_;
+    Platform::String^ title_;
+    Platform::String^ description_;
 
     int lengthCm_;
     int heightCm_;

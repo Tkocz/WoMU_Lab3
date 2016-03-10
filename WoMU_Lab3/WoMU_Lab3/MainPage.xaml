@@ -9,7 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="Assets/images/triforce_bg2.png"/>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button x:Name="CameraButton" HorizontalAlignment="Center" VerticalAlignment="Top">
             <SymbolIcon Symbol="Camera" Height="100" Width="100" />
         </Button>
         <Button HorizontalAlignment="Center">
