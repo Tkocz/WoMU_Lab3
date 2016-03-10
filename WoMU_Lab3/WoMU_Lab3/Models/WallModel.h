@@ -6,21 +6,24 @@
 ref class WallModel sealed {
 
 public:
-	WallModel();
+    WallModel();
     virtual ~WallModel();
 
-	int lengthCm();
-	int heightCm();
+    std::string& title      () { return title_;       }
+    std::string& description() { return description_; }
 
-    int areaCm2();
+    int heightCm() { return heightCm_; }
+    int lengthCm() { return lengthCm_; }
+
+    int areaCm2 () { return (lengthCm_ * heightCm_); }
 
 private:
 
-	std::string* title_;
-	std::string* description_;
+    std::string* title_;
+    std::string* description_;
 
-	int lengthCm_;
-	int heightCm_;
+    int lengthCm_;
+    int heightCm_;
 
     void* photo_;
 
