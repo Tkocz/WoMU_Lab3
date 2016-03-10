@@ -43,12 +43,6 @@ void WoMU_Lab3::AddRoomView::Wall3ButtonTapped(Platform::Object^ sender, Windows
 }
 
 
-void WoMU_Lab3::AddRoomView::Wall4Button(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
-{
-	Frame->Navigate(AddWallView::typeid);
-}
-
-
 void WoMU_Lab3::AddRoomView::FloorButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
 	Frame->Navigate(AddWallView::typeid);
@@ -56,6 +50,12 @@ void WoMU_Lab3::AddRoomView::FloorButtonTapped(Platform::Object^ sender, Windows
 
 
 void WoMU_Lab3::AddRoomView::CeilingButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+	Frame->Navigate(AddWallView::typeid);
+}
+
+
+void WoMU_Lab3::AddRoomView::Wall4ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
 	Frame->Navigate(AddWallView::typeid);
 }

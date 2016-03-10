@@ -26,7 +26,7 @@
                 <Button x:Name="wallButton" Content="Wall 1" Tapped="Wall1ButtonTapped"/>
                 <Button x:Name="wall2Button" Content="Wall 2" Tapped="Wall2ButtonTapped"/>
                 <Button x:Name="wall3Button" Content="Wall 3" Tapped="Wall3ButtonTapped"/>
-                <Button x:Name="wall4Button" Content="Wall 4" Tapped="Wall4Button"/>
+                <Button x:Name="wall4Button" Content="Wall 4" Tapped="Wall4ButtonTapped"/>
                 <Button x:Name="floorButton" Content="Floor" Tapped="FloorButtonTapped"/>
                 <Button x:Name="ceilingButton" Content="Ceiling" Tapped="CeilingButtonTapped"/>
             </ListView>
