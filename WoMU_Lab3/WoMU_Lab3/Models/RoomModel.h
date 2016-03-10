@@ -1,20 +1,22 @@
 #pragma once
 
+#include "pch.h"
 #include "WallModel.h"
-
 #include <string>
 
-ref class RoomModel {
+ref class RoomModel sealed {
 
 public:
 	RoomModel();
-    ~RoomModel();
+    virtual ~RoomModel();
 
     int areaCm2();
     int volumeCm3();
 
-	std::string^ title;
-	std::string^ description;
+private:
+
+	std::string* title;
+	std::string* description;
 
 	float longitude;
     float latitude;
@@ -25,7 +27,5 @@ public:
 	WallModel^ south;
 	WallModel^ north;
 	WallModel^ west;
-
-private:
 
 };

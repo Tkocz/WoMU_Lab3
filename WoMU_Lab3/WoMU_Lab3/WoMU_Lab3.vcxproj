@@ -145,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Models\RoomModel.h" />
     <ClInclude Include="Models\WallModel.h" />
+    <ClInclude Include="Views\AddRoomView.xaml.h">
+      <DependentUpon>Views\AddRoomView.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Views\AddWallView.xaml.h">
       <DependentUpon>Views\AddWallView.xaml</DependentUpon>
     </ClInclude>
@@ -156,6 +159,7 @@
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AddRoomView.xaml" />
     <Page Include="Views\AddWallView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -197,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="Models\RoomModel.cpp" />
     <ClCompile Include="Models\WallModel.cpp" />
+    <ClCompile Include="Views\AddRoomView.xaml.cpp">
+      <DependentUpon>Views\AddRoomView.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Views\AddWallView.xaml.cpp">
       <DependentUpon>Views\AddWallView.xaml</DependentUpon>
     </ClCompile>

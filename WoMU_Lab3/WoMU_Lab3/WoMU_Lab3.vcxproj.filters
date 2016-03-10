@@ -18,6 +18,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Models\RoomModel.cpp" />
     <ClCompile Include="Models\WallModel.cpp" />
+    <ClCompile Include="Views\AddWallView.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="MainPage.xaml.h" />
     <ClInclude Include="Models\RoomModel.h" />
     <ClInclude Include="Models\WallModel.h" />
+    <ClInclude Include="Views\AddWallView.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -73,5 +75,6 @@
   <ItemGroup>
     <Page Include="MainPage.xaml" />
     <Page Include="Views\AddWallView.xaml" />
+    <Page Include="Views\AddRoomView.xaml" />
   </ItemGroup>
 </Project>

@@ -1,23 +1,27 @@
 #pragma once
 
+#include "pch.h"
 #include <string>
 
-class WallModel {
+ref class WallModel sealed {
 
 public:
 	WallModel();
-    ~WallModel();
+    virtual ~WallModel();
+
+	int lengthCm();
+	int heightCm();
 
     int areaCm2();
 
-	std::string^ title;
-	std::string^ description;
-
-	int lengthCm;
-	int heightCm;
-
-    void* photo;
-
 private:
+
+	std::string* title_;
+	std::string* description_;
+
+	int lengthCm_;
+	int heightCm_;
+
+    void* photo_;
 
 };

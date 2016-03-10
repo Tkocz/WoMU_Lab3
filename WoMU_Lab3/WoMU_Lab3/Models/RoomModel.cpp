@@ -1,15 +1,18 @@
+#include "pch.h"
 #include "RoomModel.h"
 #include "WallModel.h"
 
 RoomModel::RoomModel() {
 }
 
-RoomModel::~RoomModel() = default;
+RoomModel::~RoomModel() {
+
+}
 
 int RoomModel::areaCm2() {
-    return (floor->lengthCm * floor->heightCm);
+    return (floor->lengthCm() * floor->heightCm());
 }
 
 int RoomModel::volumeCm3() {
-    return (areaCm2() * east->heightCm);
+    return (areaCm2() * east->heightCm());
 }
