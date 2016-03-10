@@ -9,16 +9,27 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="5">
         <Image Source="../Assets/images/triforce_bg2.png"/>
-        <StackPanel>
-            <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="5,15,5,5" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
-            <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="340"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
-            <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
-            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
-            <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
-            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Bredd" VerticalAlignment="Top"/>
-            <Slider x:Name="WidthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="360" Height="38"/>
-            <Button x:Name="button" Content="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="Room1ButtonTapped"/>
-        </StackPanel>
+        <ScrollViewer         Name="listView"
+                          ScrollViewer.HorizontalScrollMode="Disabled"
+                          ScrollViewer.VerticalScrollMode="Enabled"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView>
+                <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="5,15,5,5" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
+                <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="300"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
+                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
+                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
+                <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
+                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Bredd" VerticalAlignment="Top"/>
+                <Slider x:Name="WidthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
+                <Button x:Name="wallButton" Content="Wall 1" Tapped="Wall1ButtonTapped"/>
+                <Button x:Name="wall2Button" Content="Wall 2" Tapped="Wall2ButtonTapped"/>
+                <Button x:Name="wall3Button" Content="Wall 3" Tapped="Wall3ButtonTapped"/>
+                <Button x:Name="wall4Button" Content="Wall 4" Tapped="Wall4Button"/>
+                <Button x:Name="floorButton" Content="Floor" Tapped="FloorButtonTapped"/>
+                <Button x:Name="ceilingButton" Content="Ceiling" Tapped="CeilingButtonTapped"/>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </Page>
