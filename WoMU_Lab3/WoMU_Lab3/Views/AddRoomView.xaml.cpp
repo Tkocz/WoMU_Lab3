@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "AddRoomView.xaml.h"
+#include "AddWallView.xaml.h"
 
 using namespace WoMU_Lab3;
 
@@ -22,4 +23,10 @@ using namespace Windows::UI::Xaml::Navigation;
 AddRoomView::AddRoomView()
 {
 	InitializeComponent();
+}
+
+
+void WoMU_Lab3::AddRoomView::Room1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+	Frame->Navigate(AddWallView::typeid);
 }

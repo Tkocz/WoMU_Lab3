@@ -9,11 +9,26 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="5">
         <Image Source="../Assets/images/triforce_bg2.png"/>
-        <Slider x:Name="lengthSlider" HorizontalAlignment="Left" Margin="0,467,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
-        <Slider x:Name="heightSlider" HorizontalAlignment="Left" Margin="0,528,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,449,0,0" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,510,0,0" TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
-        <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="10,297,0,0" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
-        <TextBox x:Name="detailsBox" HorizontalAlignment="Left" Margin="10,334,0,0" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="340"/>
+        <ScrollViewer         Name="listView"
+                          ScrollViewer.HorizontalScrollMode="Disabled"
+                          ScrollViewer.VerticalScrollMode="Enabled"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <Button Name="CameraButtonButton" HorizontalAlignment="Center" 
+                        VerticalAlignment="Top" Margin="5" MaxWidth="300" MaxHeight="400" 
+                        Tapped="CameraButton">
+                    <SymbolIcon Symbol="Camera" HorizontalAlignment="Center" Height="100" Width="100"/>
+                </Button>
+                <Grid>
+                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" Margin="0,467,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
+                <Slider x:Name="heightSlider" HorizontalAlignment="Left" Margin="0,528,0,0" VerticalAlignment="Top" Width="360" Height="38"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,449,0,0" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,510,0,0" TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
+                <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="10,297,0,0" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
+                <TextBox x:Name="detailsBox" HorizontalAlignment="Left" Margin="10,334,0,0" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="340"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

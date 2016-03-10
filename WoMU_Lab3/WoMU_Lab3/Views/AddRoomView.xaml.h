@@ -14,5 +14,7 @@ namespace WoMU_Lab3
 	{
 	public:
 		AddRoomView();
+	private:
+		void Room1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 	};
 }

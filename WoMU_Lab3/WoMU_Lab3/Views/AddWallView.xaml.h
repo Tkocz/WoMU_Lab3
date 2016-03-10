@@ -14,5 +14,7 @@ namespace WoMU_Lab3
 	{
 	public:
 		AddWallView();
+	private:
+		void CameraButton(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 	};
 }
