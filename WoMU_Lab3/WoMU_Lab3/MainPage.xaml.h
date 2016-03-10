@@ -17,5 +17,7 @@ namespace WoMU_Lab3
 	public:
 		MainPage();
 
+	private:
+		void GoToRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }
