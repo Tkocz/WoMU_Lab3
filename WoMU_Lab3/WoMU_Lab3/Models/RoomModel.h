@@ -2,7 +2,7 @@
 
 #include "WallModel.h"
 
-#using <mscorlib.dll>
+#include <string>
 
 ref class RoomModel {
 
@@ -13,8 +13,8 @@ public:
     int areaCm2();
     int volumeCm3();
 
-	System::String^ title;
-	System::String^ description;
+	std::string^ title;
+	std::string^ description;
 
 	float longitude;
     float latitude;
