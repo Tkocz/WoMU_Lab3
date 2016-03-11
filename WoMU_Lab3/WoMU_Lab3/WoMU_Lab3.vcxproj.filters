@@ -19,6 +19,7 @@
     <ClCompile Include="Models\RoomModel.cpp" />
     <ClCompile Include="Models\WallModel.cpp" />
     <ClCompile Include="Views\AddWallView.xaml.cpp" />
+    <ClCompile Include="Views\AddRoomView.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Models\RoomModel.h" />
     <ClInclude Include="Models\WallModel.h" />
     <ClInclude Include="Views\AddWallView.xaml.h" />
+    <ClInclude Include="Views\AddRoomView.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -63,6 +65,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\images\triforce_bg2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\images\1000px-Triforce.svg.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

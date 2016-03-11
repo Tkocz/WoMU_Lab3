@@ -9,7 +9,9 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="5">
         <Image Source="../Assets/images/triforce_bg2.png"/>
-        <ScrollViewer         Name="listView"
+        <AppBarButton Icon="Back"
+                          Click="GoToPreviousPage_OnClick"/>
+        <ScrollViewer Margin="0, 40, 0, 0" Name="listView"
                           ScrollViewer.HorizontalScrollMode="Disabled"
                           ScrollViewer.VerticalScrollMode="Enabled"
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden"

@@ -172,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\images\1000px-Triforce.svg.png" />
+    <Image Include="Assets\images\1000px-Triforce.svg.scale-100.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
     <Image Include="Assets\images\triforce.jpg" />
     <Image Include="Assets\images\triforce.png" />
     <Image Include="Assets\images\triforce_bg.png" />

@@ -7,16 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid  Width="auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="Assets/images/triforce_bg2.png"/>
-        <Button x:Name="CameraButton" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GoToRoomView_OnClick">
-            <SymbolIcon Symbol="Camera" Height="100" Width="100" />
+        <Button Background="AliceBlue" BorderBrush="Aquamarine" Margin="0, 20, 0 ,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="75" Click="GoToRoomView_OnClick">
+            <TextBlock FontSize="25" Text="Create new room"/>
         </Button>
-        <Button HorizontalAlignment="Center">
-            <Image Source="Assets/images/triforce.jpg" Width="100" Height="100"/>
-        </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Image Source="Assets/images/triforce.jpg" Width="100" Height="100"/>
+        <Button Background="Blue" BorderBrush="Bisque" Margin="0, 130 ,0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="75">
+            <TextBlock FontSize="25" FontFamily="Arial" FontStyle="Italic"  Foreground="Aqua" Text="View Rooms"/>
         </Button>
     </Grid>
 </Page>

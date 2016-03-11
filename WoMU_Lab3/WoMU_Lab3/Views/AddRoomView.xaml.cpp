@@ -78,3 +78,9 @@ void WoMU_Lab3::AddRoomView::HeightSliderValueChanged(Platform::Object^ sender, 
 {
 	heightTextBlock->Text = "Höjd i cm: " + heightSlider->Value.ToString();
 }
+
+
+void WoMU_Lab3::AddRoomView::GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Frame->GoBack();
+}
