@@ -16,19 +16,21 @@
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView>
                 <TextBox x:Name="titleBox" HorizontalAlignment="Left" Margin="5,15,5,5" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
-                <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="110" Width="300"/>
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Längd" VerticalAlignment="Top"/>
-                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
-                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Höjd" VerticalAlignment="Top"/>
-                <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
-                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Bredd" VerticalAlignment="Top"/>
-                <Slider x:Name="WidthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38"/>
+                <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Detaljerad Beskrivning" VerticalAlignment="Top" Height="100" Width="300"/>
+                <TextBlock Name="lengthTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Välj rummets längd med slidern!" VerticalAlignment="Top"/>
+                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="1000" ValueChanged="LenghtSliderValueChanged"/>
+                <TextBlock Name="widthTextBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Välj rummets bredd med slidern!" VerticalAlignment="Top"/>
+                <Slider x:Name="widthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="1000" ValueChanged="WidthSliderValueChanged"/>
+                <TextBlock Name="heightTextBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Välj rummet höjd med slider!" VerticalAlignment="Top"/>
+                <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="500" ValueChanged="HeightSliderValueChanged"/>
+                <GridView MaxWidth="250">
                 <Button x:Name="wallButton" Content="Wall 1" Tapped="Wall1ButtonTapped"/>
                 <Button x:Name="wall2Button" Content="Wall 2" Tapped="Wall2ButtonTapped"/>
                 <Button x:Name="wall3Button" Content="Wall 3" Tapped="Wall3ButtonTapped"/>
                 <Button x:Name="wall4Button" Content="Wall 4" Tapped="Wall4ButtonTapped"/>
                 <Button x:Name="floorButton" Content="Floor" Tapped="FloorButtonTapped"/>
                 <Button x:Name="ceilingButton" Content="Ceiling" Tapped="CeilingButtonTapped"/>
+                </GridView>
             </ListView>
         </ScrollViewer>
     </Grid>

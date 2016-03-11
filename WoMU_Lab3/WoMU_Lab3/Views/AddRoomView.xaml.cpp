@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "AddRoomView.xaml.h"
 #include "AddWallView.xaml.h"
+#include <string>
 
 using namespace WoMU_Lab3;
 
@@ -58,4 +59,22 @@ void WoMU_Lab3::AddRoomView::CeilingButtonTapped(Platform::Object^ sender, Windo
 void WoMU_Lab3::AddRoomView::Wall4ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
 	Frame->Navigate(AddWallView::typeid);
+}
+
+
+void WoMU_Lab3::AddRoomView::LenghtSliderValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
+{
+	lengthTextBlock->Text = "Längd i cm: " + lengthSlider->Value.ToString();
+}
+
+
+void WoMU_Lab3::AddRoomView::WidthSliderValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
+{
+	widthTextBlock->Text = "Bredd i cm: " + widthSlider->Value.ToString();
+}
+
+
+void WoMU_Lab3::AddRoomView::HeightSliderValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
+{
+	heightTextBlock->Text = "Höjd i cm: " + heightSlider->Value.ToString();
 }
