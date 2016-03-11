@@ -8,6 +8,7 @@
 
 using namespace WoMU_Lab3;
 
+using namespace concurrency;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -70,6 +71,7 @@ void WoMU_Lab3::AddWallView::CameraButton(Platform::Object^ sender, Windows::UI:
 }
 
 void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUICommand^ command) {
+	
 	// Clear previous returned file name, if it exists, between iterations of this scenario
 	//OutputTextBlock->Text = "";
 
@@ -80,18 +82,18 @@ void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUIComman
 	openPicker->FileTypeFilter->Append(".jpeg");
 	openPicker->FileTypeFilter->Append(".png");
 
-	/*
+	
 	create_task(openPicker->PickSingleFileAsync()).then([this](StorageFile^ file)
 	{
 		if (file)
 		{
-			OutputTextBlock->Text = "Picked photo: " + file->Name;
+			//OutputTextBlock->Text = "Picked photo: " + file->Name;
 		}
 		else
 		{
-			OutputTextBlock->Text = "Operation cancelled.";
+			//OutputTextBlock->Text = "Operation cancelled.";
 		}
-	});*/
+	});
 }
 
 void WoMU_Lab3::AddWallView::TakePhotoCommand(Windows::UI::Popups::IUICommand^ command) {
