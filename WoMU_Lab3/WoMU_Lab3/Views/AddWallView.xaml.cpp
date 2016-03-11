@@ -83,17 +83,25 @@ void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUIComman
 	openPicker->FileTypeFilter->Append(".png");
 
 	
-	create_task(openPicker->PickSingleFileAsync()).then([this](StorageFile^ file)
+	concurrency::task<StorageFile^>(openPicker->PickSingleFileAsync()).then([this](StorageFile^ file)
 	{
-		if (file)
+		if (nullptr == file)
+			return;
+		
+		//OutputTextBlock->Text = "Picked photo: " + file->Name;
+		concurrency::task<Streams::IRandomAccessStream^>(file->OpenAsync(FileAccessMode::Read)).then([this](Streams::IRandomAccessStream^ stream)
 		{
-			//OutputTextBlock->Text = "Picked photo: " + file->Name;
-		}
-		else
-		{
-			//OutputTextBlock->Text = "Operation cancelled.";
-		}
+			BitmapImage^ bitmapImage = ref new BitmapImage();
+			bitmapImage->SetSource(stream);
+			auto img = ref new Image();
+
+			img->Source = bitmapImage;
+
+			this->CameraButtonButton->Content = img;
+
+		});
 	});
+	//this->CameraButtonButton->Content = file;
 }
 
 void WoMU_Lab3::AddWallView::TakePhotoCommand(Windows::UI::Popups::IUICommand^ command) {
