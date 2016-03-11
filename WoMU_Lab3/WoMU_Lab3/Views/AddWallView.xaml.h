@@ -16,5 +16,7 @@ namespace WoMU_Lab3
 		AddWallView();
 	private:
 		void CameraButton(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
+		void TakePhotoCommand(Windows::UI::Popups::IUICommand^command);
+		void ChoosePictureCommand(Windows::UI::Popups::IUICommand^command);
 	};
 }
