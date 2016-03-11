@@ -8,6 +8,8 @@
 #include "AddWallView.xaml.h"
 #include <string>
 
+
+
 using namespace WoMU_Lab3;
 
 using namespace Platform;
@@ -20,6 +22,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::Storage;
 
 AddRoomView::AddRoomView()
 {

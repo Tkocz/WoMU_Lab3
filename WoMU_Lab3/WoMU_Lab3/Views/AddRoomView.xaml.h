@@ -6,6 +6,7 @@
 #pragma once
 
 #include "Views\AddRoomView.g.h"
+using namespace Windows::Storage;
 
 namespace WoMU_Lab3
 {
@@ -15,6 +16,7 @@ namespace WoMU_Lab3
 	public:
 		AddRoomView();
 	private:
+		StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 		void Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void Wall3ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
