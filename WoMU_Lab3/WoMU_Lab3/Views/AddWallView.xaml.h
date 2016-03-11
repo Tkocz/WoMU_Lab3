@@ -18,5 +18,7 @@ namespace WoMU_Lab3
 		void CameraButton(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void TakePhotoCommand(Windows::UI::Popups::IUICommand^command);
 		void ChoosePictureCommand(Windows::UI::Popups::IUICommand^command);
+		void AddToRoom_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

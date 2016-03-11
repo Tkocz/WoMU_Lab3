@@ -9,23 +9,22 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <Image Source="../Assets/images/triforce_bg2.png"/>
-        <ScrollViewer         Name="listView"
+        <AppBarButton Icon="Cancel" HorizontalAlignment="Left"
+                          Click="GoToPreviousPage_OnClick"/>
+            <AppBarButton Icon="Save" HorizontalAlignment="Right"
+                                  Click="AddToRoom_OnClick" />
+        <Button Name="CameraButtonButton" MaxWidth="200" MaxHeight="200" Tapped="CameraButton" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0">
+            <SymbolIcon Symbol="Camera" Height="100" Width="100"/>
+        </Button>
+        <ScrollViewer Margin="0,200,0,0"        Name="listView"
                           ScrollViewer.HorizontalScrollMode="Disabled"
                           ScrollViewer.VerticalScrollMode="Enabled"
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView>
-                <Button Name="CameraButtonButton" MaxWidth="200" MaxHeight="200" Tapped="CameraButton">
-                    <SymbolIcon Symbol="Camera" Height="100" Width="100"/>
-                </Button>
+                
                 <TextBox x:Name="titleBox" Text="Titel" MaxLength="30"/>
                 <TextBox x:Name="detailsBox" Text="Detaljerad Beskrivning" Height="110" Width="300"/>
-                <GridView>
-                    <Button Content="Back" Padding="50,10,50,10" Margin="5,50,5,5">
-                    </Button>
-                    <Button Content="Save" Padding="50,10,50,10" Margin="5,50,5,5">
-                    </Button>
-                </GridView>
             </ListView>
         </ScrollViewer>
     </Grid>
