@@ -16,6 +16,8 @@ namespace WoMU_Lab3
 	public:
 		AddRoomView();
 	private:
+		void WriteRoomToStorage();
+		void ReadRoomFromStorage();
 		StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 		void Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);

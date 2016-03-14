@@ -7,37 +7,62 @@
 ref class RoomModel sealed {
 
 public:
-    RoomModel();
-    virtual ~RoomModel();
+	RoomModel();
+	virtual ~RoomModel();
 
-    Platform::String^ title      () { return title_;       }
-    Platform::String^ description() { return description_; }
+	void title(Platform::String^ s) { title_ = s; }
+	void description(Platform::String^ s) { description_ = s; }
+	Platform::String^ title() { return title_; }
+	Platform::String^ description() { return description_; }
 
-    float longitude() { return longitude_; }
-    float latitude()  { return latitude_; }
+	void longitude(float v) { longitude_ = v; }
+	void latitude(float v) { latitude_ = v; }
 
-    WallModel^ ceiling  () { return ceiling_; }
-    WallModel^ floor    () { return floor_;   }
-    WallModel^ eastWall () { return east_;    }
-    WallModel^ southWall() { return south_;   }
-    WallModel^ northWall() { return north_;   }
-    WallModel^ westWall () { return west_;    }
+	float longitude() { return longitude_; }
+	float latitude() { return latitude_; }
 
-    int areaCm2()   { return floor_->lengthCm() * floor_->heightCm(); }
-    int volumeCm3() { return areaCm2() * east_->heightCm();          }
+	void ceiling(WallModel^ w) { ceiling_ = w; }
+	void floor(WallModel^ w) { floor_ = w; }
+	void eastWall(WallModel^ w) { east_ = w; }
+	void southWall(WallModel^ w) { south_ = w; }
+	void northWall(WallModel^ w) { north_ = w; }
+	void westWall(WallModel^ w) { west_ = w; }
+
+	WallModel^ ceiling() { return ceiling_; }
+	WallModel^ floor() { return floor_; }
+	WallModel^ eastWall() { return east_; }
+	WallModel^ southWall() { return south_; }
+	WallModel^ northWall() { return north_; }
+	WallModel^ westWall() { return west_; }
+
+
+	void widthCm(int i) { widthCm_ = i; }
+	void heightCm(int i) { heightCm_ = i; }
+	void lengthCm(int i) { lengthCm_ = i; }
+
+	int widthCm() { return widthCm_; }
+	int heightCm() { return heightCm_; }
+	int lengthCm() { return lengthCm_; }
+
+	int areaCm2() { return (lengthCm_ * widthCm_); }
+	int volumeCm3() { return areaCm2() * heightCm(); }
 
 private:
-    Platform::String^ title_;
-    Platform::String^ description_;
+	Platform::String^ title_;
+	Platform::String^ description_;
 
-    float longitude_;
-    float latitude_;
+	float longitude_;
+	float latitude_;
 
-    WallModel^ ceiling_;
-    WallModel^ floor_;
-    WallModel^ east_;
-    WallModel^ south_;
-    WallModel^ north_;
-    WallModel^ west_;
+	int widthCm_;
+	int lengthCm_;
+	int heightCm_;
+
+	WallModel^ ceiling_;
+	WallModel^ floor_;
+	WallModel^ east_;
+	WallModel^ south_;
+	WallModel^ north_;
+	WallModel^ west_;
 
 };

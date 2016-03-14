@@ -7,6 +7,7 @@
 #include "AddRoomView.xaml.h"
 #include "AddWallView.xaml.h"
 #include <string>
+#include "Models\RoomModel.h"
 
 
 
@@ -28,6 +29,70 @@ AddRoomView::AddRoomView()
 {
 	InitializeComponent();
 }
+
+
+//--------------------------------- Storage functions------------------------------
+
+void AddRoomView::WriteRoomToStorage()
+{
+	concurrency::task<StorageFile^> fileOperation =
+		concurrency::create_task(localFolder->CreateFileAsync("dataFile.txt", CreationCollisionOption::ReplaceExisting));
+	
+	
+	RoomModel^ currentRoom = ref new RoomModel;
+	currentRoom->title(titleBox->Text);
+	currentRoom->description(detailsBox->Text);
+	currentRoom->lengthCm(lengthSlider->Value);
+	currentRoom->widthCm(widthSlider->Value);
+	currentRoom->heightCm(heightSlider->Value);
+
+	fileOperation.then([this, currentRoom](StorageFile^ sampleFile)
+	{
+
+		Platform::String^ text = "";
+
+		text += currentRoom->title() + "\n";
+		text += currentRoom->description() + "\n";
+		text += currentRoom->lengthCm() + "\n";
+		text += currentRoom->widthCm() + "\n";
+		text += currentRoom->heightCm() + "\n";
+
+
+		return FileIO::WriteTextAsync(sampleFile, text);
+	}).then([this](concurrency::task<void> previousOperation) {
+		try {
+			previousOperation.get();
+		}
+		catch (Platform::Exception^) {
+			OutputDebugString(L"Shit went wrong \n");
+		}
+	});
+}
+
+// Read data from a file
+
+void AddRoomView::ReadRoomFromStorage()
+{
+	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync("dataFile.txt"));
+	getFileOperation.then([this](StorageFile^ file)
+	{
+		return FileIO::ReadTextAsync(file);
+	}).then([this](concurrency::task<String^> previousOperation) {
+		String^ timestamp;
+
+		try {
+			// Data is contained in timestamp
+			timestamp = previousOperation.get();
+		}
+		catch (...) {
+			// Timestamp not found
+		}
+	});
+}
+
+
+
+//--------------------------- Button functions-----------------------------------------
 
 void WoMU_Lab3::AddRoomView::Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
@@ -85,5 +150,6 @@ void WoMU_Lab3::AddRoomView::HeightSliderValueChanged(Platform::Object^ sender, 
 
 void WoMU_Lab3::AddRoomView::GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	WriteRoomToStorage();
 	Frame->GoBack();
 }
