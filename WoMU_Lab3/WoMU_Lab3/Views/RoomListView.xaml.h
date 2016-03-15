@@ -17,6 +17,6 @@ namespace WoMU_Lab3
 		RoomListView();
 	private:
 		StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
-		void GoToPreviousPage(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

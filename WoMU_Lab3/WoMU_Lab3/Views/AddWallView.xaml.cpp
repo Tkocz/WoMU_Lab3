@@ -107,8 +107,6 @@ void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUIComman
 void WoMU_Lab3::AddWallView::TakePhotoCommand(Windows::UI::Popups::IUICommand^ command) {
 	CameraCaptureUI^ dialog = ref new CameraCaptureUI();
 
-
-
 	concurrency::task<StorageFile^>(dialog->CaptureFileAsync(CameraCaptureUIMode::Photo)).then([this](StorageFile^ file)
 	{
 

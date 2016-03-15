@@ -21,8 +21,6 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 MainPage::MainPage()
 {
 	InitializeComponent();
@@ -35,7 +33,7 @@ void WoMU_Lab3::MainPage::GoToRoomView_OnClick(Platform::Object^ sender, Windows
 }
 
 
-void WoMU_Lab3::MainPage::GoToListRoomView(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void WoMU_Lab3::MainPage::GoToListRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	Frame->Navigate(RoomListView::typeid);
 }

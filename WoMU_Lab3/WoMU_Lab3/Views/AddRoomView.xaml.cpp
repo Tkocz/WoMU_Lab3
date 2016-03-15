@@ -16,6 +16,7 @@
 
 using namespace WoMU_Lab3;
 
+using namespace concurrency;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -27,6 +28,10 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::Storage;
+using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::Devices::Geolocation;
+using namespace Windows::UI::Core;
+using namespace Windows::UI::Popups;
 
 
 AddRoomView::AddRoomView()
@@ -165,4 +170,53 @@ void WoMU_Lab3::AddRoomView::GoToPreviousPage_OnClick(Platform::Object^ sender, 
 {
 	WriteRoomToStorage();
 	Frame->GoBack();
+}
+
+void WoMU_Lab3::AddRoomView::GetGeolocationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	GetGeolocationButton->IsEnabled = false;
+	LocationDisabledMessage->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+
+	task<GeolocationAccessStatus> geolocationAccessRequestTask(Windows::Devices::Geolocation::Geolocator::RequestAccessAsync());
+	geolocationAccessRequestTask.then([this](task<GeolocationAccessStatus> accessStatusTask)
+	{
+		// Get will throw an exception if the task was canceled or failed with an error
+		auto accessStatus = accessStatusTask.get();
+
+		if (accessStatus == GeolocationAccessStatus::Allowed)
+		{
+
+			auto geolocator = ref new Windows::Devices::Geolocation::Geolocator();
+			geolocator->DesiredAccuracyInMeters = desiredAccuracyInMetersValue;
+
+			task<Geoposition^> geopositionTask(geolocator->GetGeopositionAsync(), geopositionTaskTokenSource.get_token());
+			geopositionTask.then([this](task<Geoposition^> getPosTask)
+			{
+
+				// Get will throw an exception if the task was canceled or failed with an error
+				UpdateLocationData(getPosTask.get());
+
+				GetGeolocationButton->IsEnabled = true;
+			});
+		}
+		else //GeolocationAccessStatus::Unspecified:
+		{
+			MessageDialog^ damn = ref new MessageDialog("Unspecified error!");
+			damn->ShowAsync();
+			UpdateLocationData(nullptr);
+		}
+	});
+}
+void WoMU_Lab3::AddRoomView::UpdateLocationData(Windows::Devices::Geolocation::Geoposition^ position)
+	{
+		if (position == nullptr)
+		{
+			ScenarioOutput_Latitude->Text = "No data";
+			ScenarioOutput_Longitude->Text = "No data";
+		}
+		else
+		{
+			ScenarioOutput_Latitude->Text = position->Coordinate->Point->Position.Latitude.ToString();
+			ScenarioOutput_Longitude->Text = position->Coordinate->Point->Position.Longitude.ToString();
+		}
 }

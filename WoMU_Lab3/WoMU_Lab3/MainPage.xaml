@@ -12,7 +12,7 @@
         <Button Background="AliceBlue" BorderBrush="Aquamarine" Margin="0, 20, 0 ,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="75" Click="GoToRoomView_OnClick">
             <TextBlock FontSize="25" Text="Create new room"/>
         </Button>
-        <Button Background="Blue" BorderBrush="Bisque" Margin="0, 130 ,0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="75" Click="GoToListRoomView">
+        <Button Background="Blue" BorderBrush="Bisque" Margin="0, 130 ,0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="75" Click="GoToListRoomView_OnClick">
             <TextBlock FontSize="25" FontFamily="Arial" FontStyle="Italic"  Foreground="Aqua" Text="View Rooms"/>
         </Button>
     </Grid>

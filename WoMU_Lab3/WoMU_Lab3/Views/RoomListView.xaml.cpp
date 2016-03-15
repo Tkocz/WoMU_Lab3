@@ -24,11 +24,9 @@ using namespace Windows::UI::Xaml::Navigation;
 RoomListView::RoomListView()
 {
 	InitializeComponent();
-
 }
 
-
-void WoMU_Lab3::RoomListView::GoToPreviousPage(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void WoMU_Lab3::RoomListView::GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	Frame->GoBack();
 }

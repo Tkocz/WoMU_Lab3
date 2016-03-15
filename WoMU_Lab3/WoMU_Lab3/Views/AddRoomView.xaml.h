@@ -6,11 +6,13 @@
 #pragma once
 
 #include "Views\AddRoomView.g.h"
+#include "MainPage.xaml.h"
+
 #include "Models\RoomModel.h"
 #include <string.h>
 
-
 using namespace Windows::Storage;
+using namespace WoMU_Lab3;
 
 namespace WoMU_Lab3
 {
@@ -34,5 +36,18 @@ namespace WoMU_Lab3
 		void WidthSliderValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e);
 		void HeightSliderValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e);
 		void GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		concurrency::cancellation_token_source geopositionTaskTokenSource;
+		void GetGeolocationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void UpdateLocationData(Windows::Devices::Geolocation::Geoposition^ position);
+		
+		unsigned int desiredAccuracyInMetersValue = 0;
+	
+		internal:
+			static AddRoomView^ rootPage;
+	};
+	public enum class NotifyType
+	{
+		StatusMessage,
+		ErrorMessage
 	};
 }

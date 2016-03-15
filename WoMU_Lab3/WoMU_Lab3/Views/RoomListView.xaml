@@ -9,7 +9,7 @@
 
     <Grid  Width="auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="../Assets/images/triforce_bg2.png"/>
-        <AppBarButton Icon="Back" Click="GoToPreviousPage"/>
+        <AppBarButton Icon="Back" Click="GoToPreviousPage_OnClick"/>
         <ListView>
             
         </ListView>
