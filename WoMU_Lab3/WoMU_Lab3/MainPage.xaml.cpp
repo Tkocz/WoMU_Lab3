@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 #include "Views\AddRoomView.xaml.h"
+#include "Views\RoomListView.xaml.h"
 
 using namespace WoMU_Lab3;
 
@@ -30,5 +31,11 @@ MainPage::MainPage()
 
 void WoMU_Lab3::MainPage::GoToRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	Frame->Navigate((AddRoomView::typeid));
+	Frame->Navigate(AddRoomView::typeid);
+}
+
+
+void WoMU_Lab3::MainPage::GoToListRoomView(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Frame->Navigate(RoomListView::typeid);
 }

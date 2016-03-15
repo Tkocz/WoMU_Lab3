@@ -81,5 +81,6 @@
     <Page Include="MainPage.xaml" />
     <Page Include="Views\AddWallView.xaml" />
     <Page Include="Views\AddRoomView.xaml" />
+    <Page Include="Views\RoomListView.xaml" />
   </ItemGroup>
 </Project>

@@ -6,10 +6,13 @@
 #include "pch.h"
 #include "AddRoomView.xaml.h"
 #include "AddWallView.xaml.h"
-#include <string>
+#include <string.h>
 #include "Models\RoomModel.h"
 
-
+#include <string>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
 using namespace WoMU_Lab3;
 
@@ -25,9 +28,11 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::Storage;
 
+
 AddRoomView::AddRoomView()
 {
 	InitializeComponent();
+	ReadRoomFromStorage();
 }
 
 
@@ -39,14 +44,13 @@ void AddRoomView::WriteRoomToStorage()
 		concurrency::create_task(localFolder->CreateFileAsync("dataFile.txt", CreationCollisionOption::ReplaceExisting));
 	
 	
-	RoomModel^ currentRoom = ref new RoomModel;
 	currentRoom->title(titleBox->Text);
 	currentRoom->description(detailsBox->Text);
 	currentRoom->lengthCm(lengthSlider->Value);
 	currentRoom->widthCm(widthSlider->Value);
 	currentRoom->heightCm(heightSlider->Value);
 
-	fileOperation.then([this, currentRoom](StorageFile^ sampleFile)
+	fileOperation.then([this](StorageFile^ sampleFile)
 	{
 
 		Platform::String^ text = "";
@@ -73,23 +77,32 @@ void AddRoomView::WriteRoomToStorage()
 
 void AddRoomView::ReadRoomFromStorage()
 {
+
+	String^ shit = ref new String();
+
+	TextBox^ temp = detailsBox;
+
 	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync("dataFile.txt"));
+
+
 	getFileOperation.then([this](StorageFile^ file)
 	{
 		return FileIO::ReadTextAsync(file);
-	}).then([this](concurrency::task<String^> previousOperation) {
+	}).then([this, temp](concurrency::task<String^> previousOperation) {
 		String^ timestamp;
 
 		try {
 			// Data is contained in timestamp
 			timestamp = previousOperation.get();
+			temp->Text = timestamp;
 		}
 		catch (...) {
 			// Timestamp not found
 		}
 	});
-}
 
+
+}
 
 
 //--------------------------- Button functions-----------------------------------------

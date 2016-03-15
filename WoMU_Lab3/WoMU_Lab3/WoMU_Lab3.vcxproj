@@ -151,6 +151,9 @@
     <ClInclude Include="Views\AddWallView.xaml.h">
       <DependentUpon>Views\AddWallView.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\RoomListView.xaml.h">
+      <DependentUpon>Views\RoomListView.xaml</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -161,6 +164,9 @@
     </Page>
     <Page Include="Views\AddRoomView.xaml" />
     <Page Include="Views\AddWallView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RoomListView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -209,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="Views\AddWallView.xaml.cpp">
       <DependentUpon>Views\AddWallView.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\RoomListView.xaml.cpp">
+      <DependentUpon>Views\RoomListView.xaml</DependentUpon>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -19,5 +19,6 @@ namespace WoMU_Lab3
 
 	private:
 		void GoToRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void GoToListRoomView(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

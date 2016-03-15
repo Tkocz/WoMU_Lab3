@@ -6,6 +6,10 @@
 #pragma once
 
 #include "Views\AddRoomView.g.h"
+#include "Models\RoomModel.h"
+#include <string.h>
+
+
 using namespace Windows::Storage;
 
 namespace WoMU_Lab3
@@ -18,6 +22,7 @@ namespace WoMU_Lab3
 	private:
 		void WriteRoomToStorage();
 		void ReadRoomFromStorage();
+		RoomModel^ currentRoom = ref new RoomModel;
 		StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 		void Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
