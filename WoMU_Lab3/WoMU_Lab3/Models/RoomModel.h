@@ -15,11 +15,11 @@ public:
 	Platform::String^ title() { return title_; }
 	Platform::String^ description() { return description_; }
 
-	void longitude(float v) { longitude_ = v; }
-	void latitude(float v) { latitude_ = v; }
+	void longitude(Platform::String^ s) { longitude_ = s; }
+	void latitude(Platform::String^ s) { latitude_ = s; }
 
-	float longitude() { return longitude_; }
-	float latitude() { return latitude_; }
+	Platform::String^ longitude() { return longitude_; }
+	Platform::String^ latitude() { return latitude_; }
 
 	void ceiling(WallModel^ w) { ceiling_ = w; }
 	void floor(WallModel^ w) { floor_ = w; }
@@ -51,8 +51,8 @@ private:
 	Platform::String^ title_;
 	Platform::String^ description_;
 
-	float longitude_;
-	float latitude_;
+	Platform::String^ longitude_;
+	Platform::String^ latitude_;
 
 	int widthCm_;
 	int lengthCm_;

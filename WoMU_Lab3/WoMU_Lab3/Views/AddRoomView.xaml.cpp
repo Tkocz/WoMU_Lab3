@@ -54,6 +54,8 @@ void AddRoomView::WriteRoomToStorage()
 	currentRoom->lengthCm(lengthSlider->Value);
 	currentRoom->widthCm(widthSlider->Value);
 	currentRoom->heightCm(heightSlider->Value);
+	currentRoom->latitude(ScenarioOutput_Latitude->Text);
+	currentRoom->longitude(ScenarioOutput_Longitude->Text);
 
 	fileOperation.then([this](StorageFile^ sampleFile)
 	{
@@ -65,7 +67,8 @@ void AddRoomView::WriteRoomToStorage()
 		text += currentRoom->lengthCm() + "\n";
 		text += currentRoom->widthCm() + "\n";
 		text += currentRoom->heightCm() + "\n";
-
+		text += currentRoom->latitude() + "\n";
+		text += currentRoom->longitude() + "\n";
 
 		return FileIO::WriteTextAsync(sampleFile, text);
 	}).then([this](concurrency::task<void> previousOperation) {
