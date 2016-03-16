@@ -1,4 +1,6 @@
-﻿//
+﻿#define _CRT_SECURE_NO_WARNINGS
+
+//
 // AddRoomView.xaml.cpp
 // Implementation of the AddRoomView class
 //
@@ -8,7 +10,9 @@
 #include "AddWallView.xaml.h"
 #include <string.h>
 #include "Models\RoomModel.h"
-
+#include <sstream>
+#include <algorithm>
+#include <iterator>
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -57,6 +61,13 @@ void AddRoomView::WriteRoomToStorage()
 	currentRoom->latitude(ScenarioOutput_Latitude->Text);
 	currentRoom->longitude(ScenarioOutput_Longitude->Text);
 
+	currentRoom->wall1(currentWall1);
+	currentRoom->wall2(currentWall2);
+	currentRoom->wall3(currentWall3);
+	currentRoom->wall4(currentWall4);
+	currentRoom->ceiling(currentCeiling);
+	currentRoom->floor(currentFloor);
+
 	fileOperation.then([this](StorageFile^ sampleFile)
 	{
 
@@ -67,8 +78,29 @@ void AddRoomView::WriteRoomToStorage()
 		text += currentRoom->lengthCm() + "\n";
 		text += currentRoom->widthCm() + "\n";
 		text += currentRoom->heightCm() + "\n";
+
 		text += currentRoom->latitude() + "\n";
 		text += currentRoom->longitude() + "\n";
+
+		text += currentRoom->wall1()->title() + "\n";
+		text += currentRoom->wall1()->description() + "\n";
+
+		text += currentRoom->wall2()->title() + "\n";
+		text += currentRoom->wall2()->description() + "\n";
+
+		text += currentRoom->wall3()->title() + "\n";
+		text += currentRoom->wall3()->description() + "\n";
+
+		text += currentRoom->wall4()->title() + "\n";
+		text += currentRoom->wall4()->description() + "\n";
+
+		text += currentRoom->ceiling()->title() + "\n";
+		text += currentRoom->ceiling()->description() + "\n";
+
+		text += currentRoom->floor()->title() + "\n";
+		text += currentRoom->floor()->description() + "\n";
+
+		// + adresser för bilder
 
 		return FileIO::WriteTextAsync(sampleFile, text);
 	}).then([this](concurrency::task<void> previousOperation) {
@@ -86,26 +118,94 @@ void AddRoomView::WriteRoomToStorage()
 void AddRoomView::ReadRoomFromStorage()
 {
 
-	String^ shit = ref new String();
-
-	TextBox^ temp = detailsBox;
-
 	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync("dataFile.txt"));
 
 
 	getFileOperation.then([this](StorageFile^ file)
 	{
 		return FileIO::ReadTextAsync(file);
-	}).then([this, temp](concurrency::task<String^> previousOperation) {
-		String^ timestamp;
+	}).then([this](concurrency::task<String^> previousOperation) {
+		String^ roomAsText;
 
 		try {
-			// Data is contained in timestamp
-			timestamp = previousOperation.get();
-			temp->Text = timestamp;
+			roomAsText = previousOperation.get();
+
+			const wchar_t* data = roomAsText->Data();
+			auto len = wcslen(data);
+
+			int i = 0;
+			int j = 0;
+			Platform::String^ rows[20] = { nullptr };
+			int row = 0;
+
+			while (i < len) {
+				for (int x = i; x < len; x++) {
+					if (data[x] == '\n') {
+						j = x;
+						break;
+					}
+				}
+
+				wchar_t line[1000] = { 0 };
+				wcsncpy(line, data + i, j - i);
+
+				rows[row++] = ref new String(line);
+
+
+				i = j + 1;
+
+			}
+			currentRoom->title(rows[0]);
+			currentRoom->description(rows[1]);
+			currentRoom->lengthCm(std::stoi(rows[2]->Data()));
+			currentRoom->widthCm(std::stoi(rows[3]->Data()));
+			currentRoom->heightCm(std::stoi(rows[4]->Data()));
+
+			currentRoom->latitude(rows[5]);
+			currentRoom->longitude(rows[6]);
+
+			currentWall1->title(rows[7]);
+			currentWall1->description(rows[8]);
+
+			currentWall2->title(rows[9]);
+			currentWall2->description(rows[10]);
+
+			currentWall3->title(rows[11]);
+			currentWall3->description(rows[12]);
+
+			currentWall4->title(rows[13]);
+			currentWall4->description(rows[14]);
+
+			currentCeiling->title(rows[15]);
+			currentCeiling->description(rows[16]);
+
+			currentFloor->title(rows[17]);
+			currentFloor->description(rows[18]);
+
+			currentRoom->wall1(currentWall1);
+			currentRoom->wall2(currentWall2);
+			currentRoom->wall3(currentWall3);
+			currentRoom->wall4(currentWall4);
+			currentRoom->ceiling(currentCeiling);
+			currentRoom->floor(currentFloor);
+
+			// + addresser för bilder
+
+			App^ thisApp = (App^)Application::Current;
+
+			thisApp->currentRoom = currentRoom;
+
+			titleBox->Text = currentRoom->title();
+			detailsBox->Text = currentRoom->description();
+			lengthSlider->Value = currentRoom->lengthCm();
+			widthSlider->Value = currentRoom->widthCm();
+			heightSlider->Value = currentRoom->heightCm();
+			ScenarioOutput_Latitude->Text = currentRoom->latitude();
+			ScenarioOutput_Longitude->Text = currentRoom->longitude();
+			
 		}
 		catch (...) {
-			// Timestamp not found
+			OutputDebugString(L"Not Good");
 		}
 	});
 
@@ -220,6 +320,8 @@ void WoMU_Lab3::AddRoomView::UpdateLocationData(Windows::Devices::Geolocation::G
 		else
 		{
 			ScenarioOutput_Latitude->Text = position->Coordinate->Point->Position.Latitude.ToString();
+			currentRoom->latitude(position->Coordinate->Point->Position.Latitude.ToString());
 			ScenarioOutput_Longitude->Text = position->Coordinate->Point->Position.Longitude.ToString();
+			currentRoom->longitude(position->Coordinate->Point->Position.Longitude.ToString());
 		}
 }

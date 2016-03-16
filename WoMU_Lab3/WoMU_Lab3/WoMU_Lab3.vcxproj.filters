@@ -20,6 +20,7 @@
     <ClCompile Include="Models\WallModel.cpp" />
     <ClCompile Include="Views\AddWallView.xaml.cpp" />
     <ClCompile Include="Views\AddRoomView.xaml.cpp" />
+    <ClCompile Include="Views\RoomListView.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="Models\WallModel.h" />
     <ClInclude Include="Views\AddWallView.xaml.h" />
     <ClInclude Include="Views\AddRoomView.xaml.h" />
+    <ClInclude Include="Views\RoomListView.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">

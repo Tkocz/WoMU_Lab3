@@ -33,7 +33,15 @@ using namespace Windows::Storage::Pickers;
 
 AddWallView::AddWallView()
 {
+
+	App^ thisApp = (App^)Application::Current;
+
 	InitializeComponent();
+
+	currentWall = thisApp->currentRoom->wall1();
+
+	titleBox->Text = currentWall->title();
+	detailsBox->Text = currentWall->description();
 }
 
 
@@ -130,6 +138,13 @@ void WoMU_Lab3::AddWallView::TakePhotoCommand(Windows::UI::Popups::IUICommand^ c
 
 void WoMU_Lab3::AddWallView::AddToRoom_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	App^ thisApp = (App^)Application::Current;
+
+	currentWall->title(titleBox->Text);
+	currentWall->description(detailsBox->Text);
+
+	thisApp->currentRoom->wall1(currentWall);
+	
 	Frame->GoBack();
 }
 

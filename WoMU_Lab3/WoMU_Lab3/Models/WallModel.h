@@ -9,6 +9,9 @@ public:
     WallModel();
     virtual ~WallModel();
 
+	void title(Platform::String^ s) { title_ = s; }
+	void description(Platform::String^ s) { description_ = s; }
+
     Platform::String^ title      () { return title_;       }
     Platform::String^ description() { return description_; }
 

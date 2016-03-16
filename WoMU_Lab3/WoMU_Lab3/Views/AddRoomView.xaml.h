@@ -25,6 +25,12 @@ namespace WoMU_Lab3
 		void WriteRoomToStorage();
 		void ReadRoomFromStorage();
 		RoomModel^ currentRoom = ref new RoomModel;
+		WallModel^ currentWall1 = ref new WallModel();
+		WallModel^ currentWall2 = ref new WallModel();
+		WallModel^ currentWall3 = ref new WallModel();
+		WallModel^ currentWall4 = ref new WallModel();
+		WallModel^ currentCeiling = ref new WallModel();
+		WallModel^ currentFloor = ref new WallModel();
 		StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 		void Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);

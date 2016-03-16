@@ -21,19 +21,21 @@ public:
 	Platform::String^ longitude() { return longitude_; }
 	Platform::String^ latitude() { return latitude_; }
 
+
+
 	void ceiling(WallModel^ w) { ceiling_ = w; }
 	void floor(WallModel^ w) { floor_ = w; }
-	void eastWall(WallModel^ w) { east_ = w; }
-	void southWall(WallModel^ w) { south_ = w; }
-	void northWall(WallModel^ w) { north_ = w; }
-	void westWall(WallModel^ w) { west_ = w; }
+	void wall1(WallModel^ w) { wall1_ = w; }
+	void wall2(WallModel^ w) { wall2_ = w; }
+	void wall3(WallModel^ w) { wall3_ = w; }
+	void wall4(WallModel^ w) { wall4_ = w; }
 
 	WallModel^ ceiling() { return ceiling_; }
 	WallModel^ floor() { return floor_; }
-	WallModel^ eastWall() { return east_; }
-	WallModel^ southWall() { return south_; }
-	WallModel^ northWall() { return north_; }
-	WallModel^ westWall() { return west_; }
+	WallModel^ wall1() { return wall1_; }
+	WallModel^ wall2() { return wall2_; }
+	WallModel^ wall3() { return wall3_; }
+	WallModel^ wall4() { return wall4_; }
 
 
 	void widthCm(int i) { widthCm_ = i; }
@@ -60,9 +62,9 @@ private:
 
 	WallModel^ ceiling_;
 	WallModel^ floor_;
-	WallModel^ east_;
-	WallModel^ south_;
-	WallModel^ north_;
-	WallModel^ west_;
+	WallModel^ wall1_;
+	WallModel^ wall2_;
+	WallModel^ wall3_;
+	WallModel^ wall4_;
 
 };
