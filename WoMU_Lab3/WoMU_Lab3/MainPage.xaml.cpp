@@ -29,6 +29,9 @@ MainPage::MainPage()
 
 void WoMU_Lab3::MainPage::GoToRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    // generera filnamn och skicka med in till AddRoomView
+
+    ((App^)Application::Current)->currentRoom = nullptr;
 	Frame->Navigate(AddRoomView::typeid);
 }
 

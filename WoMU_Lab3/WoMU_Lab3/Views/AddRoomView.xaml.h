@@ -24,7 +24,7 @@ namespace WoMU_Lab3
 	private:
 		void WriteRoomToStorage();
 		void ReadRoomFromStorage();
-		RoomModel^ currentRoom = ref new RoomModel;
+		//RoomModel^ currentRoom = ref new RoomModel;
 		WallModel^ currentWall1 = ref new WallModel();
 		WallModel^ currentWall2 = ref new WallModel();
 		WallModel^ currentWall3 = ref new WallModel();

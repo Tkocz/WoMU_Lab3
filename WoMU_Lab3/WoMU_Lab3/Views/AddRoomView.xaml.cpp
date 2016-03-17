@@ -41,7 +41,23 @@ using namespace Windows::UI::Popups;
 AddRoomView::AddRoomView()
 {
 	InitializeComponent();
-	ReadRoomFromStorage();
+
+    // if thisApp->currentRoom == nullptr, create new storage file
+    // otherwise, we just returned from wall view
+
+    
+    auto thisApp = ((App^)Application::Current);
+
+    if (!thisApp->currentRoom) {
+        thisApp->currentRoom = ref new RoomModel;
+        thisApp->currentRoom->FileName = "datafile.txt";
+
+        OutputDebugString(L"new room model\n");
+    }
+    else {
+        ReadRoomFromStorage();
+    }
+    
 }
 
 
@@ -49,8 +65,17 @@ AddRoomView::AddRoomView()
 
 void AddRoomView::WriteRoomToStorage()
 {
+    auto thisApp = ((App^)Application::Current);
+    auto currentRoom = thisApp->currentRoom;
+
+    auto filename = thisApp->currentRoom->FileName;
+
+    OutputDebugString(L"writing to ");
+    OutputDebugString(filename->Data());
+    OutputDebugString(L"\n");
+
 	concurrency::task<StorageFile^> fileOperation =
-		concurrency::create_task(localFolder->CreateFileAsync("dataFile.txt", CreationCollisionOption::ReplaceExisting));
+		concurrency::create_task(localFolder->CreateFileAsync(filename, CreationCollisionOption::ReplaceExisting));
 	
 	
 	currentRoom->title(titleBox->Text);
@@ -72,6 +97,9 @@ void AddRoomView::WriteRoomToStorage()
 	{
 
 		Platform::String^ text = "";
+
+        auto thisApp = ((App^)Application::Current);
+        auto currentRoom = thisApp->currentRoom;
 
 		text += currentRoom->title() + "\n";
 		text += currentRoom->description() + "\n";
@@ -106,6 +134,7 @@ void AddRoomView::WriteRoomToStorage()
 	}).then([this](concurrency::task<void> previousOperation) {
 		try {
 			previousOperation.get();
+
 		}
 		catch (Platform::Exception^) {
 			OutputDebugString(L"Shit went wrong \n");
@@ -117,8 +146,19 @@ void AddRoomView::WriteRoomToStorage()
 
 void AddRoomView::ReadRoomFromStorage()
 {
+    auto curRoom = ((App^)Application::Current)->currentRoom;
 
-	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync("dataFile.txt"));
+    if (!curRoom) {
+        // we dont have a room created yet so do nothing
+        OutputDebugString(L"nothing to load\n");
+        return;
+    }
+
+    OutputDebugString(L"loading storage from datafile.txt\n");
+
+    auto filename = curRoom->FileName;
+
+	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync(filename));
 
 
 	getFileOperation.then([this](StorageFile^ file)
@@ -126,6 +166,9 @@ void AddRoomView::ReadRoomFromStorage()
 		return FileIO::ReadTextAsync(file);
 	}).then([this](concurrency::task<String^> previousOperation) {
 		String^ roomAsText;
+
+        auto thisApp = ((App^)Application::Current);
+        auto currentRoom = thisApp->currentRoom;
 
 		try {
 			roomAsText = previousOperation.get();
@@ -202,6 +245,8 @@ void AddRoomView::ReadRoomFromStorage()
 			heightSlider->Value = currentRoom->heightCm();
 			ScenarioOutput_Latitude->Text = currentRoom->latitude();
 			ScenarioOutput_Longitude->Text = currentRoom->longitude();
+
+            OutputDebugString(L"view model updated\n");
 			
 		}
 		catch (...) {
@@ -217,37 +262,43 @@ void AddRoomView::ReadRoomFromStorage()
 
 void WoMU_Lab3::AddRoomView::Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
+    WriteRoomToStorage();
 	Frame->Navigate(AddWallView::typeid);
 }
 
 
 void WoMU_Lab3::AddRoomView::Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	Frame->Navigate(AddWallView::typeid);
+    WriteRoomToStorage();
+    Frame->Navigate(AddWallView::typeid);
 }
 
 
 void WoMU_Lab3::AddRoomView::Wall3ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	Frame->Navigate(AddWallView::typeid);
+    WriteRoomToStorage();
+    Frame->Navigate(AddWallView::typeid);
 }
 
 
 void WoMU_Lab3::AddRoomView::FloorButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	Frame->Navigate(AddWallView::typeid);
+    WriteRoomToStorage();
+    Frame->Navigate(AddWallView::typeid);
 }
 
 
 void WoMU_Lab3::AddRoomView::CeilingButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	Frame->Navigate(AddWallView::typeid);
+    WriteRoomToStorage();
+    Frame->Navigate(AddWallView::typeid);
 }
 
 
 void WoMU_Lab3::AddRoomView::Wall4ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	Frame->Navigate(AddWallView::typeid);
+    WriteRoomToStorage();
+    Frame->Navigate(AddWallView::typeid);
 }
 
 
@@ -272,6 +323,7 @@ void WoMU_Lab3::AddRoomView::HeightSliderValueChanged(Platform::Object^ sender, 
 void WoMU_Lab3::AddRoomView::GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	WriteRoomToStorage();
+    auto thisApp = ((App^)Application::Current);
 	Frame->GoBack();
 }
 
@@ -319,6 +371,9 @@ void WoMU_Lab3::AddRoomView::UpdateLocationData(Windows::Devices::Geolocation::G
 		}
 		else
 		{
+            auto thisApp = ((App^)Application::Current);
+            auto currentRoom = thisApp->currentRoom;
+
 			ScenarioOutput_Latitude->Text = position->Coordinate->Point->Position.Latitude.ToString();
 			currentRoom->latitude(position->Coordinate->Point->Position.Latitude.ToString());
 			ScenarioOutput_Longitude->Text = position->Coordinate->Point->Position.Longitude.ToString();

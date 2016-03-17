@@ -40,6 +40,11 @@ AddWallView::AddWallView()
 
 	currentWall = thisApp->currentRoom->wall1();
 
+    if (!currentWall) {
+        currentWall = ref new WallModel;
+        thisApp->currentRoom->wall1(thisApp->currentRoom->wall1());
+    }
+
 	titleBox->Text = currentWall->title();
 	detailsBox->Text = currentWall->description();
 }

@@ -21,6 +21,7 @@ public:
 	Platform::String^ longitude() { return longitude_; }
 	Platform::String^ latitude() { return latitude_; }
 
+    property Platform::String^ FileName;
 
 
 	void ceiling(WallModel^ w) { ceiling_ = w; }
