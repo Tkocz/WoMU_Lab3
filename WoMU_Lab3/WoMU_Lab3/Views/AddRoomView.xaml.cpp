@@ -83,8 +83,8 @@ void AddRoomView::WriteRoomToStorage()
 	currentRoom->lengthCm(lengthSlider->Value);
 	currentRoom->widthCm(widthSlider->Value);
 	currentRoom->heightCm(heightSlider->Value);
-	currentRoom->latitude(ScenarioOutput_Latitude->Text);
-	currentRoom->longitude(ScenarioOutput_Longitude->Text);
+	currentRoom->latitude(Output_Latitude->Text);
+	currentRoom->longitude(Output_Longitude->Text);
 
 	currentRoom->wall1(currentWall1);
 	currentRoom->wall2(currentWall2);
@@ -243,14 +243,14 @@ void AddRoomView::ReadRoomFromStorage()
 			lengthSlider->Value = currentRoom->lengthCm();
 			widthSlider->Value = currentRoom->widthCm();
 			heightSlider->Value = currentRoom->heightCm();
-			ScenarioOutput_Latitude->Text = currentRoom->latitude();
-			ScenarioOutput_Longitude->Text = currentRoom->longitude();
+			Output_Latitude->Text = currentRoom->latitude();
+			Output_Longitude->Text = currentRoom->longitude();
 
-            OutputDebugString(L"view model updated\n");
+//            OutputDebugString(L"view model updated\n");
 			
 		}
 		catch (...) {
-			OutputDebugString(L"Not Good");
+//			OutputDebugString(L"Not Good");
 		}
 	});
 
@@ -366,17 +366,17 @@ void WoMU_Lab3::AddRoomView::UpdateLocationData(Windows::Devices::Geolocation::G
 	{
 		if (position == nullptr)
 		{
-			ScenarioOutput_Latitude->Text = "No data";
-			ScenarioOutput_Longitude->Text = "No data";
+			Output_Latitude->Text = "No data";
+			Output_Longitude->Text = "No data";
 		}
 		else
 		{
             auto thisApp = ((App^)Application::Current);
             auto currentRoom = thisApp->currentRoom;
 
-			ScenarioOutput_Latitude->Text = position->Coordinate->Point->Position.Latitude.ToString();
+			Output_Latitude->Text = position->Coordinate->Point->Position.Latitude.ToString();
 			currentRoom->latitude(position->Coordinate->Point->Position.Latitude.ToString());
-			ScenarioOutput_Longitude->Text = position->Coordinate->Point->Position.Longitude.ToString();
+			Output_Longitude->Text = position->Coordinate->Point->Position.Longitude.ToString();
 			currentRoom->longitude(position->Coordinate->Point->Position.Longitude.ToString());
 		}
 }

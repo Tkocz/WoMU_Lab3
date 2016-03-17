@@ -49,11 +49,11 @@
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" Padding="5">
                     <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Latitude: " />
-                        <TextBlock x:Name="ScenarioOutput_Latitude" Margin="0,0,10,0" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Text="No data" />
+                        <TextBlock x:Name="Output_Latitude" Margin="0,0,10,0" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Text="No data" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="5">
                         <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Longitude: " />
-                        <TextBlock x:Name="ScenarioOutput_Longitude" Margin="0,0,10,0" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="No data" />
+                        <TextBlock x:Name="Output_Longitude" Margin="0,0,10,0" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="No data" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

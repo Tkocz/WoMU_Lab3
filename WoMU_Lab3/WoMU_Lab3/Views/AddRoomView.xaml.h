@@ -51,9 +51,4 @@ namespace WoMU_Lab3
 		internal:
 			static AddRoomView^ rootPage;
 	};
-	public enum class NotifyType
-	{
-		StatusMessage,
-		ErrorMessage
-	};
 }
