@@ -29,7 +29,7 @@ using namespace Windows::UI::Popups;
 MainPage::MainPage()
 {
 	InitializeComponent();
-	//RegisterBackgroundTask();
+	RegisterBackgroundTask();
 	/*
 	for each (room in room_collection)
 	{
@@ -78,22 +78,26 @@ void WoMU_Lab3::MainPage::RegisterBackgroundTask()
 		task<BackgroundAccessStatus> requestAccessTask(BackgroundExecutionManager::RequestAccessAsync());
 		requestAccessTask.then([this](BackgroundAccessStatus backgroundAccessStatus)
 		{
-			BackgroundTaskBuilder^ geofenceTaskBuilder = ref new BackgroundTaskBuilder();
+			// Create a new background task builder
+			BackgroundTaskBuilder^ geolocTaskBuilder = ref new BackgroundTaskBuilder();
 
-			geofenceTaskBuilder->Name = backgroundTaskLocator;
-			geofenceTaskBuilder->TaskEntryPoint = backgroundTaskLocatorEntry;
+			geolocTaskBuilder->Name = backgroundTask;
+			geolocTaskBuilder->TaskEntryPoint = backgroundTaskEntryPoint;
 
-			auto trigger = ref new LocationTrigger(LocationTriggerType::Geofence);
+			// Create a new timer triggering at a 15 minute interval
+			auto trigger = ref new TimeTrigger(15, false);
 
-			// Associate the location trigger with the background task builder
-			geofenceTaskBuilder->SetTrigger(trigger);
-			
-			geofenceTask = geofenceTaskBuilder->Register();
+			// Associate the timer trigger with the background task builder
+			geolocTaskBuilder->SetTrigger(trigger);
+
+			// Register the background task
+			//geolocTask = geolocTaskBuilder->Register();
 
 			RequestLocationAccess();
+
 		});
 	}
-	catch (Exception^ ex)
+	catch (...)
 	{
 	}
 }
