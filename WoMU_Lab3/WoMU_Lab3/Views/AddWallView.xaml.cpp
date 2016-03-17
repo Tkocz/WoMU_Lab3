@@ -38,15 +38,18 @@ AddWallView::AddWallView()
 
 	InitializeComponent();
 
-	currentWall = thisApp->currentRoom->wall1();
+	//currentWall = thisApp->currentRoom->wall1();
 
-    if (!currentWall) {
+    /*if (!currentWall) {
         currentWall = ref new WallModel;
         thisApp->currentRoom->wall1(thisApp->currentRoom->wall1());
     }
-
-	titleBox->Text = currentWall->title();
-	detailsBox->Text = currentWall->description();
+	*/
+	titleBox->Text = thisApp->currentWall->title();
+	detailsBox->Text = thisApp->currentWall->description();
+	OutputDebugString(L"ass1");
+	OutputDebugString(thisApp->currentWall->title()->Data());
+	OutputDebugString(L"ass2\n");
 }
 
 
@@ -145,10 +148,13 @@ void WoMU_Lab3::AddWallView::AddToRoom_OnClick(Platform::Object^ sender, Windows
 {
 	App^ thisApp = (App^)Application::Current;
 
-	currentWall->title(titleBox->Text);
-	currentWall->description(detailsBox->Text);
+	thisApp->currentWall->title(titleBox->Text);
+	OutputDebugString(L"title set to ");
+	OutputDebugString(thisApp->currentWall->title()->Data());
+	OutputDebugString(L"\n");
+	thisApp->currentWall->description(detailsBox->Text);
 
-	thisApp->currentRoom->wall1(currentWall);
+	//thisApp->currentRoom->wall1(currentWall);
 	
 	Frame->GoBack();
 }

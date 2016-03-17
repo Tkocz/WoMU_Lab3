@@ -7,6 +7,7 @@
 
 #include "App.g.h"
 #include "Models\RoomModel.h"
+#include "Models\WallModel.h"
 
 namespace WoMU_Lab3
 {
@@ -21,6 +22,7 @@ namespace WoMU_Lab3
 	internal:
 		App();
 		RoomModel^ currentRoom = ref new RoomModel;
+		WallModel^ currentWall;
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);

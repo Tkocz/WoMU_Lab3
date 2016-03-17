@@ -47,15 +47,24 @@ AddRoomView::AddRoomView()
 
     
     auto thisApp = ((App^)Application::Current);
-
+	
+	thisApp->currentWall = nullptr;
+	
     if (!thisApp->currentRoom) {
         thisApp->currentRoom = ref new RoomModel;
         thisApp->currentRoom->FileName = "datafile.txt";
 
+		thisApp->currentRoom->wall1(ref new WallModel);
+		thisApp->currentRoom->wall2(ref new WallModel);
+		thisApp->currentRoom->wall3(ref new WallModel);
+		thisApp->currentRoom->wall4(ref new WallModel);
+		thisApp->currentRoom->floor(ref new WallModel);
+		thisApp->currentRoom->ceiling(ref new WallModel);
+
         OutputDebugString(L"new room model\n");
     }
     else {
-        ReadRoomFromStorage();
+        ReadRoomFromStorage(false);
     }
     
 }
@@ -85,13 +94,6 @@ void AddRoomView::WriteRoomToStorage()
 	currentRoom->heightCm(heightSlider->Value);
 	currentRoom->latitude(Output_Latitude->Text);
 	currentRoom->longitude(Output_Longitude->Text);
-
-	currentRoom->wall1(currentWall1);
-	currentRoom->wall2(currentWall2);
-	currentRoom->wall3(currentWall3);
-	currentRoom->wall4(currentWall4);
-	currentRoom->ceiling(currentCeiling);
-	currentRoom->floor(currentFloor);
 
 	fileOperation.then([this](StorageFile^ sampleFile)
 	{
@@ -144,7 +146,7 @@ void AddRoomView::WriteRoomToStorage()
 
 // Read data from a file
 
-void AddRoomView::ReadRoomFromStorage()
+void AddRoomView::ReadRoomFromStorage(bool loadFromFile)
 {
     auto curRoom = ((App^)Application::Current)->currentRoom;
 
@@ -153,6 +155,18 @@ void AddRoomView::ReadRoomFromStorage()
         OutputDebugString(L"nothing to load\n");
         return;
     }
+
+	if (!loadFromFile) {
+
+		titleBox->Text = curRoom->title();
+		detailsBox->Text = curRoom->description();
+		lengthSlider->Value = curRoom->lengthCm();
+		widthSlider->Value = curRoom->widthCm();
+		heightSlider->Value = curRoom->heightCm();
+		Output_Latitude->Text = curRoom->latitude();
+		Output_Longitude->Text = curRoom->longitude();
+		return;
+	}
 
     OutputDebugString(L"loading storage from datafile.txt\n");
 
@@ -225,18 +239,26 @@ void AddRoomView::ReadRoomFromStorage()
 			currentFloor->title(rows[17]);
 			currentFloor->description(rows[18]);
 
+			currentRoom->wall1(ref new WallModel);
+			currentRoom->wall2(ref new WallModel);
+			currentRoom->wall3(ref new WallModel);
+			currentRoom->wall4(ref new WallModel);
+			currentRoom->floor(ref new WallModel);
+			currentRoom->ceiling(ref new WallModel);
+			/*
 			currentRoom->wall1(currentWall1);
 			currentRoom->wall2(currentWall2);
 			currentRoom->wall3(currentWall3);
 			currentRoom->wall4(currentWall4);
 			currentRoom->ceiling(currentCeiling);
-			currentRoom->floor(currentFloor);
+			currentRoom->floor(currentFloor);*/
 
 			// + addresser för bilder
 
 			App^ thisApp = (App^)Application::Current;
 
 			thisApp->currentRoom = currentRoom;
+
 
 			titleBox->Text = currentRoom->title();
 			detailsBox->Text = currentRoom->description();
@@ -263,6 +285,8 @@ void AddRoomView::ReadRoomFromStorage()
 void WoMU_Lab3::AddRoomView::Wall1ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->wall1();
 	Frame->Navigate(AddWallView::typeid);
 }
 
@@ -270,6 +294,8 @@ void WoMU_Lab3::AddRoomView::Wall1ButtonTapped(Platform::Object^ sender, Windows
 void WoMU_Lab3::AddRoomView::Wall2ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->wall2();
     Frame->Navigate(AddWallView::typeid);
 }
 
@@ -277,6 +303,8 @@ void WoMU_Lab3::AddRoomView::Wall2ButtonTapped(Platform::Object^ sender, Windows
 void WoMU_Lab3::AddRoomView::Wall3ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->wall3();
     Frame->Navigate(AddWallView::typeid);
 }
 
@@ -284,6 +312,8 @@ void WoMU_Lab3::AddRoomView::Wall3ButtonTapped(Platform::Object^ sender, Windows
 void WoMU_Lab3::AddRoomView::FloorButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->floor();
     Frame->Navigate(AddWallView::typeid);
 }
 
@@ -291,6 +321,8 @@ void WoMU_Lab3::AddRoomView::FloorButtonTapped(Platform::Object^ sender, Windows
 void WoMU_Lab3::AddRoomView::CeilingButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->ceiling();
     Frame->Navigate(AddWallView::typeid);
 }
 
@@ -298,6 +330,8 @@ void WoMU_Lab3::AddRoomView::CeilingButtonTapped(Platform::Object^ sender, Windo
 void WoMU_Lab3::AddRoomView::Wall4ButtonTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
     WriteRoomToStorage();
+	App^ thisApp = (App^)Application::Current;
+	thisApp->currentWall = thisApp->currentRoom->wall4();
     Frame->Navigate(AddWallView::typeid);
 }
 

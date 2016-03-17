@@ -23,7 +23,7 @@ namespace WoMU_Lab3
 		AddRoomView();
 	private:
 		void WriteRoomToStorage();
-		void ReadRoomFromStorage();
+		void ReadRoomFromStorage(bool loadFromFile);
 		//RoomModel^ currentRoom = ref new RoomModel;
 		WallModel^ currentWall1 = ref new WallModel();
 		WallModel^ currentWall2 = ref new WallModel();
