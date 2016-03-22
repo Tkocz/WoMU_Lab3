@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid  Width="auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="../Assets/images/triforce_bg2.png"/>
         <AppBarButton Icon="Back" Click="GoToPreviousPage_OnClick"/>
-        <ListView>
+        <ListView Name="RoomsList" Margin="0,61,0,0">
             
         </ListView>
     </Grid>

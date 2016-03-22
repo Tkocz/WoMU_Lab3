@@ -16,6 +16,7 @@ namespace WoMU_Lab3
 	public:
 		AddWallView();
 	private:
+        int wallIndex;
 		WallModel^ currentWall = ref new WallModel;
 		void CameraButton(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void TakePhotoCommand(Windows::UI::Popups::IUICommand^command);

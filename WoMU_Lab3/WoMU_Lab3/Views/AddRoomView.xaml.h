@@ -11,6 +11,7 @@
 #include "Models\RoomModel.h"
 #include <string.h>
 
+using namespace Platform;
 using namespace Windows::Storage;
 using namespace WoMU_Lab3;
 
@@ -22,6 +23,7 @@ namespace WoMU_Lab3
 	public:
 		AddRoomView();
 	private:
+        String^ GetNextRoomFilename();
 		void WriteRoomToStorage();
 		void ReadRoomFromStorage(bool loadFromFile);
 		//RoomModel^ currentRoom = ref new RoomModel;

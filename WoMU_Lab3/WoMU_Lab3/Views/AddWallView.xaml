@@ -11,7 +11,8 @@
         <Image Source="../Assets/images/triforce_bg2.png"/>
         <AppBarButton Icon="Cancel" HorizontalAlignment="Left"
                           Click="GoToPreviousPage_OnClick"/>
-            <AppBarButton Icon="Save" HorizontalAlignment="Right"
+        <TextBlock Margin="10" FontSize="24" Name="RelevantWall" HorizontalAlignment="Center" Text="Wall 1" />
+        <AppBarButton Icon="Save" HorizontalAlignment="Right"
                                   Click="AddToRoom_OnClick" />
         <Button Name="CameraButtonButton" MaxWidth="200" MaxHeight="200" Tapped="CameraButton" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0">
             <SymbolIcon Symbol="Camera" Height="100" Width="100"/>
