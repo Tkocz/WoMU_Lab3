@@ -208,6 +208,70 @@ void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUIComman
             img->Source = bitmapImage;
 
             this->CameraButtonButton->Content = img;
+
+            return stream;
+        })
+        .then([this](Streams::IRandomAccessStream^ stream) {
+            String^ fn = GetNextPicFilename();
+
+            OutputDebugStringA("den haer bilden ska sparas i ");
+            OutputDebugStringW(fn->Data());
+            OutputDebugStringA("\n");
+
+            auto thisApp = ((App^)Application::Current);
+            this->ImageFile = fn;
+
+
+            //FileIO::WriteBytesAsync(nullptr, stream->);
+
+            //auto buf = ref new Windows::Storage::Bu
+            //stream->ReadAsync(buf, stream->Size, Windows::Storage::Streams::InputStreamOptions::None)
+
+            auto localFolder = ApplicationData::Current->LocalFolder;
+            OutputDebugString(L"c++ sucks and the folder is");
+            OutputDebugString(localFolder->Path->Data());
+            OutputDebugString(L"\n");
+            concurrency::create_task(localFolder->CreateFileAsync(fn, CreationCollisionOption::ReplaceExisting)).then([this, stream](StorageFile^ outfile) {
+                stream->Seek(0);
+
+
+                auto ar = ref new Array<unsigned char>((unsigned int)stream->Size);
+                auto buf = Windows::Security::Cryptography::CryptographicBuffer::CreateFromByteArray(ar);
+
+                auto op = stream->ReadAsync(buf, (unsigned int)stream->Size, InputStreamOptions::None);
+
+                op->Completed = ref new AsyncOperationWithProgressCompletedHandler<IBuffer^, unsigned int>([this, outfile, buf](IAsyncOperationWithProgress<IBuffer^, unsigned int>^ op, AsyncStatus status) {
+                    if (status != AsyncStatus::Completed) {
+                        return;
+                    }
+
+                    OutputDebugStringA("we now have ze data!\n");
+
+                    auto lol = outfile->OpenAsync(FileAccessMode::ReadWrite);
+                    lol->Completed = ref new AsyncOperationCompletedHandler<IRandomAccessStream^>([buf](IAsyncOperation<IRandomAccessStream^>^ op, AsyncStatus status) {
+                        auto lol2 = op->GetResults()->WriteAsync(buf);
+                        lol2->Completed = ref new AsyncOperationWithProgressCompletedHandler<unsigned int, unsigned int>([](IAsyncOperationWithProgress<unsigned int, unsigned int>^ op, AsyncStatus status) {
+                            if (status != AsyncStatus::Completed)
+                                return;
+
+                            OutputDebugStringA("data written lool\n");
+                        });
+                    });
+
+                });
+
+                /*op->Completed = ref new AsyncOperationWithProgressCompletedHandler<IBuffer^, unsigned int>(
+                [](IAsyncOperationWithProgress<IBuffer^, unsigned int>^ op, AsyncStatus status) {
+                if (status != AsyncStatus::Completed) {
+                return;
+                }
+
+                OutputDebugStringA("we now have ze data!\n");
+                }
+                );*/
+
+
+            });
         });
     });
     //this->CameraButtonButton->Content = file;
