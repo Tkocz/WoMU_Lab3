@@ -31,6 +31,26 @@ using namespace Windows::Media::Capture;
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Pickers;
+using namespace Windows::Storage::Streams;
+
+String^ GetNextPicFilename() {
+    static const char alphanum[] =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    const int len = 24;
+    char s[len + 1] = { 0 };
+
+
+    for (int i = 0; i < len; ++i) {
+        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    s[len] = 0;
+
+    wchar_t buf[255] = { 0 };
+    mbstowcs(buf, s, 128);
+    return ref new String(buf) + ".jpeg";
+}
 
 
 AddWallView::AddWallView()
@@ -50,6 +70,31 @@ AddWallView::AddWallView()
     titleBox->Text = thisApp->currentWall->title();
     detailsBox->Text = thisApp->currentWall->description();
     OutputDebugString(thisApp->currentWall->title()->Data());
+
+    OutputDebugString(L"den här bilden ska de va ");
+    OutputDebugString(thisApp->currentWall->ImageFile->Data());
+
+    if (thisApp->currentWall->ImageFile->Length() > 0) {
+        auto localFolder = ApplicationData::Current->LocalFolder;
+        concurrency::task<StorageFile^>(localFolder->GetFileAsync(thisApp->currentWall->ImageFile)).then([this](StorageFile^ file) {
+            if (nullptr == file)
+                return;
+
+            concurrency::task<Streams::IRandomAccessStream^>(file->OpenAsync(FileAccessMode::Read)).then([this](Streams::IRandomAccessStream^ stream) {
+                BitmapImage^ bitmapImage = ref new BitmapImage();
+                bitmapImage->SetSource(stream);
+
+                auto img = ref new Image();
+                img->Source = bitmapImage;
+
+                this->CameraButtonButton->Content = img;
+
+                return stream;
+            });
+        });
+    }
+
+    OutputDebugString(L"\n");
     switch (thisApp->currentWallIndex) {
     case 1: { this->RelevantWall->Text = ref new String(L"Vägg 1"); break; }
     case 2: { this->RelevantWall->Text = ref new String(L"Vägg 2"); break; }
@@ -84,7 +129,6 @@ AddWallView::AddWallView()
                 case 3: { this->RelevantWall->Text = ref new String(L"Vägg 3"); thisApp->currentWall = thisApp->currentRoom->wall3(); break; }
                 case 4: { this->RelevantWall->Text = ref new String(L"Vägg 4"); thisApp->currentWall = thisApp->currentRoom->wall4(); break; }
                 }
-
             }
             else if (dir == L"right") {
                 thisApp->currentWallIndex++;
@@ -164,33 +208,100 @@ void WoMU_Lab3::AddWallView::ChoosePictureCommand(Windows::UI::Popups::IUIComman
             img->Source = bitmapImage;
 
             this->CameraButtonButton->Content = img;
-
         });
     });
     //this->CameraButtonButton->Content = file;
 }
 
+void CppSucksFunc(IAsyncOperationWithProgress<IBuffer^, unsigned int>^ op, AsyncStatus status) {
+    if (status != AsyncStatus::Completed) {
+        return;
+    }
+
+    OutputDebugStringA("we now have ze data!\n");
+
+}
+
 void WoMU_Lab3::AddWallView::TakePhotoCommand(Windows::UI::Popups::IUICommand^ command) {
     CameraCaptureUI^ dialog = ref new CameraCaptureUI();
 
-    concurrency::task<StorageFile^>(dialog->CaptureFileAsync(CameraCaptureUIMode::Photo)).then([this](StorageFile^ file)
-    {
-
+    concurrency::task<StorageFile^>(dialog->CaptureFileAsync(CameraCaptureUIMode::Photo)).then([this](StorageFile^ file) {
         if (nullptr == file)
             return;
 
-        concurrency::task<Streams::IRandomAccessStream^>(file->OpenAsync(FileAccessMode::Read)).then([this](Streams::IRandomAccessStream^ stream)
-        {
+        concurrency::task<Streams::IRandomAccessStream^>(file->OpenAsync(FileAccessMode::Read)).then([this](Streams::IRandomAccessStream^ stream) {
             BitmapImage^ bitmapImage = ref new BitmapImage();
             bitmapImage->SetSource(stream);
-            auto img = ref new Image();
 
+            auto img = ref new Image();
             img->Source = bitmapImage;
 
             this->CameraButtonButton->Content = img;
 
-        });
+            return stream;
+        })
+        .then([this](Streams::IRandomAccessStream^ stream) {
+            String^ fn = GetNextPicFilename();
 
+            OutputDebugStringA("den haer bilden ska sparas i ");
+            OutputDebugStringW(fn->Data());
+            OutputDebugStringA("\n");
+
+            auto thisApp = ((App^)Application::Current);
+            this->ImageFile = fn;
+
+
+            //FileIO::WriteBytesAsync(nullptr, stream->);
+
+            //auto buf = ref new Windows::Storage::Bu
+            //stream->ReadAsync(buf, stream->Size, Windows::Storage::Streams::InputStreamOptions::None)
+
+            auto localFolder = ApplicationData::Current->LocalFolder;
+            OutputDebugString(L"c++ sucks and the folder is");
+            OutputDebugString(localFolder->Path->Data());
+            OutputDebugString(L"\n");
+            concurrency::create_task(localFolder->CreateFileAsync(fn, CreationCollisionOption::ReplaceExisting)).then([this, stream](StorageFile^ outfile) {
+                stream->Seek(0);
+
+
+                auto ar  = ref new Array<unsigned char>((unsigned int)stream->Size);
+                auto buf = Windows::Security::Cryptography::CryptographicBuffer::CreateFromByteArray(ar);
+
+                auto op = stream->ReadAsync(buf, (unsigned int)stream->Size, InputStreamOptions::None);
+
+                op->Completed = ref new AsyncOperationWithProgressCompletedHandler<IBuffer^, unsigned int>([this, outfile, buf](IAsyncOperationWithProgress<IBuffer^, unsigned int>^ op, AsyncStatus status) {
+                    if (status != AsyncStatus::Completed) {
+                        return;
+                    }
+
+                    OutputDebugStringA("we now have ze data!\n");
+
+                    auto lol = outfile->OpenAsync(FileAccessMode::ReadWrite);
+                    lol->Completed = ref new AsyncOperationCompletedHandler<IRandomAccessStream^>([buf](IAsyncOperation<IRandomAccessStream^>^ op, AsyncStatus status) {
+                        auto lol2 = op->GetResults()->WriteAsync(buf);
+                        lol2->Completed = ref new AsyncOperationWithProgressCompletedHandler<unsigned int, unsigned int>([](IAsyncOperationWithProgress<unsigned int, unsigned int>^ op, AsyncStatus status) {
+                            if (status != AsyncStatus::Completed)
+                                return;
+
+                            OutputDebugStringA("data written lool\n");
+                        });
+                    });
+
+                });
+
+                /*op->Completed = ref new AsyncOperationWithProgressCompletedHandler<IBuffer^, unsigned int>(
+                    [](IAsyncOperationWithProgress<IBuffer^, unsigned int>^ op, AsyncStatus status) {
+                    if (status != AsyncStatus::Completed) {
+                        return;
+                    }
+
+                    OutputDebugStringA("we now have ze data!\n");
+                }
+                );*/
+
+
+            });
+        });
     });
 }
 
@@ -203,6 +314,7 @@ void WoMU_Lab3::AddWallView::AddToRoom_OnClick(Platform::Object^ sender, Windows
     OutputDebugString(thisApp->currentWall->title()->Data());
     OutputDebugString(L"\n");
     thisApp->currentWall->description(detailsBox->Text);
+    thisApp->currentWall->ImageFile = this->ImageFile;
 
     //thisApp->currentRoom->wall1(currentWall);
     

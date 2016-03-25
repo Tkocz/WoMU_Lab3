@@ -15,6 +15,7 @@ public:
     Platform::String^ title      () { return title_;       }
     Platform::String^ description() { return description_; }
 
+    property Platform::String^ ImageFile;
 
 private:
 

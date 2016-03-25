@@ -7,6 +7,7 @@
 #include "MainPage.xaml.h"
 #include "Views\AddRoomView.xaml.h"
 #include "Views\RoomListView.xaml.h"
+#include "Controllers\Assometer.h"
 
 using namespace WoMU_Lab3;
 
@@ -29,12 +30,15 @@ using namespace Windows::UI::Popups;
 MainPage::MainPage()
 {
 	InitializeComponent();
+
+    Assometer::Enable();
 }
 
 
 void WoMU_Lab3::MainPage::GoToRoomView_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     // generera filnamn och skicka med in till AddRoomView
+
 
     ((App^)Application::Current)->currentRoom = nullptr;
 	Frame->Navigate(AddRoomView::typeid);

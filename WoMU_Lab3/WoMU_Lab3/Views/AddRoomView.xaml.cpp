@@ -138,21 +138,27 @@ void AddRoomView::WriteRoomToStorage()
 
         text += currentRoom->wall1()->title() + "\n";
         text += currentRoom->wall1()->description() + "\n";
+        text += currentRoom->wall1()->ImageFile + "\n";
 
         text += currentRoom->wall2()->title() + "\n";
         text += currentRoom->wall2()->description() + "\n";
+        text += currentRoom->wall2()->ImageFile + "\n";
 
         text += currentRoom->wall3()->title() + "\n";
         text += currentRoom->wall3()->description() + "\n";
+        text += currentRoom->wall3()->ImageFile + "\n";
 
         text += currentRoom->wall4()->title() + "\n";
         text += currentRoom->wall4()->description() + "\n";
+        text += currentRoom->wall4()->ImageFile + "\n";
 
         text += currentRoom->ceiling()->title() + "\n";
         text += currentRoom->ceiling()->description() + "\n";
+        text += currentRoom->ceiling()->ImageFile + "\n";
 
         text += currentRoom->floor()->title() + "\n";
         text += currentRoom->floor()->description() + "\n";
+        text += currentRoom->floor()->ImageFile + "\n";
 
         // + adresser för bilder
 
@@ -218,7 +224,7 @@ void AddRoomView::ReadRoomFromStorage(bool loadFromFile)
 
             int i = 0;
             int j = 0;
-            Platform::String^ rows[20] = { nullptr };
+            Platform::String^ rows[99] = { nullptr };
             int row = 0;
 
             while (i < len) {
@@ -238,32 +244,40 @@ void AddRoomView::ReadRoomFromStorage(bool loadFromFile)
                 i = j + 1;
 
             }
-            currentRoom->title(rows[0]);
-            currentRoom->description(rows[1]);
-            currentRoom->lengthCm(std::stoi(rows[2]->Data()));
-            currentRoom->widthCm(std::stoi(rows[3]->Data()));
-            currentRoom->heightCm(std::stoi(rows[4]->Data()));
 
-            currentRoom->latitude(rows[5]);
-            currentRoom->longitude(rows[6]);
+            int dat_row = 0;
+            currentRoom->title(rows[dat_row++]);
+            currentRoom->description(rows[dat_row++]);
+            currentRoom->lengthCm(std::stoi(rows[dat_row++]->Data()));
+            currentRoom->widthCm(std::stoi(rows[dat_row++]->Data()));
+            currentRoom->heightCm(std::stoi(rows[dat_row++]->Data()));
 
-            currentWall1->title(rows[7]);
-            currentWall1->description(rows[8]);
+            currentRoom->latitude(rows[dat_row++]);
+            currentRoom->longitude(rows[dat_row++]);
 
-            currentWall2->title(rows[9]);
-            currentWall2->description(rows[10]);
+            currentWall1->title(rows[dat_row++]);
+            currentWall1->description(rows[dat_row++]);
+            currentWall1->ImageFile = rows[dat_row++];
 
-            currentWall3->title(rows[11]);
-            currentWall3->description(rows[12]);
+            currentWall2->title(rows[dat_row++]);
+            currentWall2->description(rows[dat_row++]);
+            currentWall2->ImageFile = rows[dat_row++];
 
-            currentWall4->title(rows[13]);
-            currentWall4->description(rows[14]);
+            currentWall3->title(rows[dat_row++]);
+            currentWall3->description(rows[dat_row++]);
+            currentWall3->ImageFile = rows[dat_row++];
 
-            currentCeiling->title(rows[15]);
-            currentCeiling->description(rows[16]);
+            currentWall4->title(rows[dat_row++]);
+            currentWall4->description(rows[dat_row++]);
+            currentWall4->ImageFile = rows[dat_row++];
 
-            currentFloor->title(rows[17]);
-            currentFloor->description(rows[18]);
+            currentCeiling->title(rows[dat_row++]);
+            currentCeiling->description(rows[dat_row++]);
+            currentCeiling->ImageFile = rows[dat_row++];
+
+            currentFloor->title(rows[dat_row++]);
+            currentFloor->description(rows[dat_row++]);
+            currentFloor->ImageFile = rows[dat_row++];
 
             currentRoom->wall1(ref new WallModel);
             currentRoom->wall2(ref new WallModel);

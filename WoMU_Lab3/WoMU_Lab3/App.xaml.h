@@ -23,6 +23,7 @@ namespace WoMU_Lab3
 		App();
 		RoomModel^ currentRoom = ref new RoomModel;
 		WallModel^ currentWall;
+        int currentWallIndex;
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);

@@ -32,6 +32,11 @@ RoomListView::RoomListView()
         for (auto it = filesInFolder->First(); it->HasCurrent; it->MoveNext())
         {
             StorageFile^ file = it->Current;
+            auto s = file->Name->Data();
+
+            int n = file->Name->Length();
+            if (s[n-3] != 't' || s[n-2] != 'x' || s[n-1] != 't')
+                continue;
 
             LoadRoom(file->Name).then([this, filename=file->Name](RoomModel^ room) {
                 auto o = this->RoomsList;
@@ -63,7 +68,8 @@ concurrency::task<RoomModel^> RoomListView::LoadRoom(String^ filename)
 
         room->FileName = filename;
 
-        try {
+        try
+        {
             roomAsText = previousOperation.get();
 
             const wchar_t* data = roomAsText->Data();
@@ -71,7 +77,7 @@ concurrency::task<RoomModel^> RoomListView::LoadRoom(String^ filename)
 
             int i = 0;
             int j = 0;
-            Platform::String^ rows[20] = { nullptr };
+            Platform::String^ rows[99] = { nullptr };
             int row = 0;
 
             while (i < len) {
@@ -109,21 +115,27 @@ concurrency::task<RoomModel^> RoomListView::LoadRoom(String^ filename)
 
             w1->title(rows[7]);
             w1->description(rows[8]);
+            w1->ImageFile = rows[9];
 
-            w2->title(rows[9]);
-            w2->description(rows[10]);
+            w2->title(rows[10]);
+            w2->description(rows[11]);
+            w2->ImageFile = rows[12];
 
-            w3->title(rows[11]);
-            w3->description(rows[12]);
+            w3->title(rows[13]);
+            w3->description(rows[14]);
+            w3->ImageFile = rows[15];
 
-            w4->title(rows[13]);
-            w4->description(rows[14]);
+            w4->title(rows[16]);
+            w4->description(rows[17]);
+            w4->ImageFile = rows[18];
 
-            wceil->title(rows[15]);
-            wceil->description(rows[16]);
+            wceil->title(rows[19]);
+            wceil->description(rows[20]);
+            wceil->ImageFile = rows[21];
 
-            wfloor->title(rows[17]);
-            wfloor->description(rows[18]);
+            wfloor->title(rows[22]);
+            wfloor->description(rows[23]);
+            wfloor->ImageFile = rows[24];
 
             room->wall1(w1);
             room->wall2(w2);
@@ -138,13 +150,12 @@ concurrency::task<RoomModel^> RoomListView::LoadRoom(String^ filename)
 
         }
         catch (...) {
+            OutputDebugStringA("something is afuck!\n");
             //			OutputDebugString(L"Not Good");
         }
 
         return (RoomModel^)nullptr;
     });
-
-
 }
 
 void WoMU_Lab3::RoomListView::GoToPreviousPage_OnClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
