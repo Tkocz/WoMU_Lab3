@@ -17,3 +17,4 @@
 #include <collection.h>
 #include <ppltasks.h>
 #include "App.xaml.h"
+#include <cmath>

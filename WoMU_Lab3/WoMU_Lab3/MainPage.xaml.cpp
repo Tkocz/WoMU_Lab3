@@ -8,6 +8,7 @@
 #include "Views\AddRoomView.xaml.h"
 #include "Views\RoomListView.xaml.h"
 #include "Controllers\Assometer.h"
+#include "GeoFence.h"
 
 using namespace WoMU_Lab3;
 
@@ -32,6 +33,9 @@ MainPage::MainPage()
 	InitializeComponent();
 
     Assometer::Enable();
+
+	GeoFence^ geoFencer = ref new GeoFence();
+	geoFencer->RegisterBackgroundTask();
 }
 
 

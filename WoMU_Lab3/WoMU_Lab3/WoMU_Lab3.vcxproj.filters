@@ -21,6 +21,8 @@
     <ClCompile Include="Views\AddWallView.xaml.cpp" />
     <ClCompile Include="Views\AddRoomView.xaml.cpp" />
     <ClCompile Include="Views\RoomListView.xaml.cpp" />
+    <ClCompile Include="Controllers\Assometer.cpp" />
+    <ClCompile Include="GeoFence.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -31,6 +33,8 @@
     <ClInclude Include="Views\AddWallView.xaml.h" />
     <ClInclude Include="Views\AddRoomView.xaml.h" />
     <ClInclude Include="Views\RoomListView.xaml.h" />
+    <ClInclude Include="Controllers\Assometer.h" />
+    <ClInclude Include="GeoFence.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
