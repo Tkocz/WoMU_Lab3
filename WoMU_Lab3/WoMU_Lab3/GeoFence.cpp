@@ -67,7 +67,7 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 }
 
 
-void GeoFence::GenerateAllGeoFences(rooms)
+void GeoFence::GenerateAllGeoFences(std::vector<RoomModel^> rooms)
 {
 	geofences->Clear();
 
@@ -87,95 +87,101 @@ void GeoFence::GenerateAllGeoFences(rooms)
 
 void GeoFence::RegisterBackgroundTask()
 {
-	boolean taskRegistered = false;
-	Platform::String^ taskName = "GeoBackgroundTask";
-
-	auto iter = BackgroundTaskRegistration::AllTasks->First();
-	auto hascur = iter->HasCurrent;
-	MessageDialog^ damn;
-	while (hascur)
-	{
-		auto cur = iter->Current->Value;
-
-		if (cur->Name == taskName)
-		{
-			taskRegistered = true;
-			geofenceTask = safe_cast<BackgroundTaskRegistration^>(cur);
-			break;
-		}
-
-		hascur = iter->MoveNext();
-	}
-	if (taskRegistered) {
-		GenerateAllGeoFences();
-
-		// Register for background task completion notifications
-		taskCompletedToken = geofenceTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
-
-		try
-		{
-			// Check the background access status of the application and display the appropriate status message
-			switch (BackgroundExecutionManager::GetAccessStatus())
-			{
-			case BackgroundAccessStatus::Unspecified:
-			case BackgroundAccessStatus::Denied:
-				damn = ref new MessageDialog("Not able to run in background.");
-				damn->ShowAsync();
-				break;
-
-			default:
-				break;
-			}
-		}
-		catch (Exception^ ex)
-		{
-			damn = ref new MessageDialog(ex->ToString());
-			damn->ShowAsync();
-		}
-	}
-	else
-	{
-		MessageDialog^ damn2;
-		try
-		{
-			// Get permission for a background task from the user. If the user has already answered once,
-			// this does nothing and the user must manually update their preference via PC Settings.
-			task<BackgroundAccessStatus> requestAccessTask(BackgroundExecutionManager::RequestAccessAsync());
-			requestAccessTask.then([this](BackgroundAccessStatus backgroundAccessStatus)
-			{
-
-				// Regardless of the answer, register the background task. If the user later adds this application
-				// to the lock screen, the background task will be ready to run.
-
-				// Create a new background task builder
-				BackgroundTaskBuilder^ geofenceTaskBuilder = ref new BackgroundTaskBuilder();
-
-				geofenceTaskBuilder->Name = "GeoBackgroundTask";
-				//geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.Background";
-				geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.GeofenceBackgroundTask";
-
-				// Create a new location trigger
-				auto trigger = ref new LocationTrigger(LocationTriggerType::Geofence);
-
-				// Associate the location trigger with the background task builder
-				geofenceTaskBuilder->SetTrigger(trigger);
 
 
-				// Register the background task
-				geofenceTask = geofenceTaskBuilder->Register();
+    GetRooms().then([this](std::vector<RoomModel^> rooms) {
+        boolean taskRegistered = false;
+        Platform::String^ taskName = "GeoBackgroundTask";
 
-				// Register for background task completion notifications
-				taskCompletedToken = geofenceTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
+        auto iter = BackgroundTaskRegistration::AllTasks->First();
+        auto hascur = iter->HasCurrent;
+        MessageDialog^ damn;
+        while (hascur)
+        {
+            auto cur = iter->Current->Value;
 
-				GenerateAllGeoFences();
-			});
-		}
-		catch (Exception^ ex)
-		{
-			damn = ref new MessageDialog(ex->ToString());
-			damn->ShowAsync();
-		}
-	}
+            if (cur->Name == taskName)
+            {
+                taskRegistered = true;
+                geofenceTask = safe_cast<BackgroundTaskRegistration^>(cur);
+                break;
+            }
+
+            hascur = iter->MoveNext();
+        }
+
+        if (taskRegistered) {
+            GenerateAllGeoFences(rooms);
+
+            // Register for background task completion notifications
+            taskCompletedToken = geofenceTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
+
+            try
+            {
+                // Check the background access status of the application and display the appropriate status message
+                switch (BackgroundExecutionManager::GetAccessStatus())
+                {
+                case BackgroundAccessStatus::Unspecified:
+                case BackgroundAccessStatus::Denied:
+                    damn = ref new MessageDialog("Not able to run in background.");
+                    damn->ShowAsync();
+                    break;
+
+                default:
+                    break;
+                }
+            }
+            catch (Exception^ ex)
+            {
+                damn = ref new MessageDialog(ex->ToString());
+                damn->ShowAsync();
+            }
+        }
+        else
+        {
+            MessageDialog^ damn2;
+            try
+            {
+                // Get permission for a background task from the user. If the user has already answered once,
+                // this does nothing and the user must manually update their preference via PC Settings.
+                task<BackgroundAccessStatus> requestAccessTask(BackgroundExecutionManager::RequestAccessAsync());
+                requestAccessTask.then([this, rooms](BackgroundAccessStatus backgroundAccessStatus)
+                {
+
+                    // Regardless of the answer, register the background task. If the user later adds this application
+                    // to the lock screen, the background task will be ready to run.
+
+                    // Create a new background task builder
+                    BackgroundTaskBuilder^ geofenceTaskBuilder = ref new BackgroundTaskBuilder();
+
+                    geofenceTaskBuilder->Name = "GeoBackgroundTask";
+                    //geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.Background";
+                    geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.GeofenceBackgroundTask";
+
+                    // Create a new location trigger
+                    auto trigger = ref new LocationTrigger(LocationTriggerType::Geofence);
+
+                    // Associate the location trigger with the background task builder
+                    geofenceTaskBuilder->SetTrigger(trigger);
+
+
+                    // Register the background task
+                    geofenceTask = geofenceTaskBuilder->Register();
+
+                    // Register for background task completion notifications
+                    taskCompletedToken = geofenceTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
+
+                    GenerateAllGeoFences(rooms);
+                });
+            }
+            catch (Exception^ ex)
+            {
+                damn = ref new MessageDialog(ex->ToString());
+                damn->ShowAsync();
+            }
+        }
+    });
+
 }
 
 void GeoFence::addGeoFence(RoomModel^ room)
