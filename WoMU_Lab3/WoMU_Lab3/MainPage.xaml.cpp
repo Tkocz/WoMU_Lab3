@@ -35,6 +35,7 @@ MainPage::MainPage()
 
     Assometer::Enable();
 
+	Geolocator^ geolocator = ref new Geolocator();
 	GeoFence^ geoFencer = ref new GeoFence();
 	geoFencer->RegisterBackgroundTask();
 }

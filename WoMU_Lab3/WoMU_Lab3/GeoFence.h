@@ -16,15 +16,19 @@ public:
 	void addGeoFence(RoomModel^ room);
 
 private:
-	RoomModel^ ReadRoomFromStorage();
 	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 	Windows::Devices::Geolocation::Geofencing::Geofence^ GenerateGeoFence(RoomModel^ room);
 	void RequestLocationAccess();
 	void GenerateAllGeoFences(RoomModel^ rooms[]);
 	void OnCompleted(Windows::ApplicationModel::Background::BackgroundTaskRegistration^ sender, Windows::ApplicationModel::Background::BackgroundTaskCompletedEventArgs^ e);
 
-	Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence^>^ geofences;
+private:
+	Platform::Collections::Vector<Platform::String^>^ geofenceBackgroundEvents;
+	Platform::String^ backgroundTaskName;
+	Platform::String^ backgroundTaskEntryPoint;
 
+	Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence^>^ geofences;
+	void RegisterBackgroundTaskOrg(Platform::Object^ sender);
 	Windows::ApplicationModel::Background::BackgroundTaskRegistration^ geofenceTask;
 	Windows::Foundation::EventRegistrationToken taskCompletedToken;
 
