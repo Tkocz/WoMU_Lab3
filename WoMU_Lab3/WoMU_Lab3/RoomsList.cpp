@@ -17,11 +17,10 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 
-concurrency::task<std::vector<RoomModel^>> GetRooms()
+concurrency::task<void> GetRooms(RoomModel^ rooms[])
 {
 	return concurrency::create_task(ApplicationData::Current->LocalFolder->GetFilesAsync()).then([=](IVectorView<StorageFile^>^ filesInFolder) {
-
-        std::vector<RoomModel^> rooms{};
+		int x = 0;
 		
 		for (auto it = filesInFolder->First(); it->HasCurrent; it->MoveNext())
 		{
@@ -32,12 +31,13 @@ concurrency::task<std::vector<RoomModel^>> GetRooms()
 			if (s[n - 3] != 't' || s[n - 2] != 'x' || s[n - 1] != 't')
 				continue;
 
-			LoadRoom(file->Name).then([&rooms, filename = file->Name](RoomModel^ room) {
-                rooms.push_back(room);
+			LoadRoom(file->Name).then([x, rooms, filename = file->Name](RoomModel^ room) {
+				rooms[x] = room;
+				OutputDebugString(L"BOSSE\n");
 			});
-		}
 
-        return rooms;
+			x++;
+		}
 	});
 }
 

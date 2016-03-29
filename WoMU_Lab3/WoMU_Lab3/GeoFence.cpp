@@ -67,29 +67,43 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 }
 
 
-void GeoFence::GenerateAllGeoFences(std::vector<RoomModel^> rooms)
+void GeoFence::GenerateAllGeoFences(RoomModel^ rooms[])
 {
 	geofences->Clear();
 
-	for (auto room : rooms) {
-		try {
-			if (room->title() != "") {
-				Geofence^ geofence = GenerateGeoFence(room);
+	concurrency::create_task([rooms, this]() {
+		std::this_thread::sleep_for(1s);
+		for (int i = 0; i < 100; i++) {
+			if (rooms[i] == nullptr)
+				continue;
 
-				geofences->InsertAt(0, geofence);
+			OutputDebugString(L"HEJ\n");
+			auto room = rooms[i];
+
+			try {
+				if (room->title() != "") {
+					Geofence^ geofence = GenerateGeoFence(room);
+
+					geofences->InsertAt(0, geofence);
+				}
+			}
+			catch (...)
+			{
 			}
 		}
-		catch (...)
-		{
-		}
+	});
 	}
-}
 
 void GeoFence::RegisterBackgroundTask()
 {
 
+	RoomModel^* rooms = new RoomModel^[100];
 
-    GetRooms().then([this](std::vector<RoomModel^> rooms) {
+	for (int i = 0; i < 100; i++) {
+		rooms[i] = nullptr;
+	}
+
+    GetRooms(rooms).then([this, rooms]() {
         boolean taskRegistered = false;
         Platform::String^ taskName = "GeoBackgroundTask";
 

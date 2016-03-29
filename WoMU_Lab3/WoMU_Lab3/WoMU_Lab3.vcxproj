@@ -148,6 +148,7 @@
     </ClInclude>
     <ClInclude Include="Models\RoomModel.h" />
     <ClInclude Include="Models\WallModel.h" />
+    <ClInclude Include="RoomsList.h" />
     <ClInclude Include="Views\AddRoomView.xaml.h">
       <DependentUpon>Views\AddRoomView.xaml</DependentUpon>
     </ClInclude>
@@ -215,6 +216,7 @@
     </ClCompile>
     <ClCompile Include="Models\RoomModel.cpp" />
     <ClCompile Include="Models\WallModel.cpp" />
+    <ClCompile Include="RoomsList.cpp" />
     <ClCompile Include="Views\AddRoomView.xaml.cpp">
       <DependentUpon>Views\AddRoomView.xaml</DependentUpon>
     </ClCompile>

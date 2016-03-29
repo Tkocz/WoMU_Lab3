@@ -20,7 +20,7 @@ private:
 	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 	Windows::Devices::Geolocation::Geofencing::Geofence^ GenerateGeoFence(RoomModel^ room);
 	void RequestLocationAccess();
-	void GenerateAllGeoFences(std::vector<RoomModel^> rooms);
+	void GenerateAllGeoFences(RoomModel^ rooms[]);
 	void OnCompleted(Windows::ApplicationModel::Background::BackgroundTaskRegistration^ sender, Windows::ApplicationModel::Background::BackgroundTaskCompletedEventArgs^ e);
 
 	Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence^>^ geofences;

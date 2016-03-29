@@ -9,5 +9,5 @@ using namespace Platform;
 using namespace WoMU_Lab3;
 
 
-concurrency::task<std::vector<RoomModel^>> GetRooms();
+concurrency::task<void> GetRooms(RoomModel^ rooms[]);
 concurrency::task<RoomModel^> LoadRoom(String^ filename);

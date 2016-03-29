@@ -27,7 +27,7 @@ void Assometer::Enable() {
 
         acco->ReadingChanged += ref new TypedEventHandler<Accelerometer^, AccelerometerReadingChangedEventArgs ^>(&Assometer::OnReadingChanged);
     }
-    catch {
+    catch(...){
         acco = nullptr;
     }
 }
