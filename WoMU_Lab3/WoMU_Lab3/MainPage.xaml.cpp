@@ -34,9 +34,8 @@ MainPage::MainPage()
 	InitializeComponent();
 
     Assometer::Enable();
-	RoomsList();
 
-	GeoFence^ geoFencer = ref new GeoFence(rooms);
+	GeoFence^ geoFencer = ref new GeoFence();
 	geoFencer->RegisterBackgroundTask();
 }
 

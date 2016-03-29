@@ -17,11 +17,11 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 
-RoomsList::RoomsList()
+concurrency::task<std::vector<RoomModel^>> GetRooms()
 {
-	concurrency::create_task(localFolder->GetFilesAsync()).then([=](IVectorView<StorageFile^>^ filesInFolder) {
+	return concurrency::create_task(ApplicationData::Current->LocalFolder->GetFilesAsync()).then([=](IVectorView<StorageFile^>^ filesInFolder) {
 
-		int x = 0;
+        std::vector<RoomModel^> rooms{};
 		
 		for (auto it = filesInFolder->First(); it->HasCurrent; it->MoveNext())
 		{
@@ -32,23 +32,24 @@ RoomsList::RoomsList()
 			if (s[n - 3] != 't' || s[n - 2] != 'x' || s[n - 1] != 't')
 				continue;
 
-			LoadRoom(file->Name).then([this, x, filename = file->Name](RoomModel^ room) {
-				this->rooms[x] = room;
+			LoadRoom(file->Name).then([&rooms, filename = file->Name](RoomModel^ room) {
+                rooms.push_back(room);
 			});
-			x++;
 		}
+
+        return rooms;
 	});
 }
 
-concurrency::task<RoomModel^> RoomsList::LoadRoom(String^ filename)
+concurrency::task<RoomModel^> LoadRoom(String^ filename)
 {
-	concurrency::task<StorageFile^> getFileOperation(localFolder->GetFileAsync(filename));
+	concurrency::task<StorageFile^> getFileOperation(ApplicationData::Current->LocalFolder->GetFileAsync(filename));
 
 
-	return getFileOperation.then([this](StorageFile^ file)
+	return getFileOperation.then([](StorageFile^ file)
 	{
 		return FileIO::ReadTextAsync(file);
-	}).then([this, filename](concurrency::task<String^> previousOperation) {
+	}).then([filename](concurrency::task<String^> previousOperation) {
 		String^ roomAsText;
 
 		auto room = ref new RoomModel;
