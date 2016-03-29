@@ -17,6 +17,10 @@ Accelerometer^ Assometer::acco = nullptr;
 void Assometer::Enable() {
     acco = Accelerometer::GetDefault();
 
+    // No ass-o-meter available.
+    if (!acco)
+        return;
+
     acco->ReportLatency = acco->MinimumReportInterval;
 
     acco->ReadingChanged += ref new TypedEventHandler<Accelerometer^, AccelerometerReadingChangedEventArgs ^>(&Assometer::OnReadingChanged);
