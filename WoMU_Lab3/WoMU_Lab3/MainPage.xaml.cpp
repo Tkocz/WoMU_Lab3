@@ -9,6 +9,7 @@
 #include "Views\RoomListView.xaml.h"
 #include "Controllers\Assometer.h"
 #include "GeoFence.h"
+#include "RoomsList.h"
 
 using namespace WoMU_Lab3;
 
@@ -33,8 +34,9 @@ MainPage::MainPage()
 	InitializeComponent();
 
     Assometer::Enable();
+	RoomsList();
 
-	GeoFence^ geoFencer = ref new GeoFence();
+	GeoFence^ geoFencer = ref new GeoFence(rooms);
 	geoFencer->RegisterBackgroundTask();
 }
 

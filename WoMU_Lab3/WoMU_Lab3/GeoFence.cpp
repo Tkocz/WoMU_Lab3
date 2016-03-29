@@ -2,6 +2,7 @@
 #include "GeoFence.h"
 #include "Models\RoomModel.h"
 #include "Models\WallModel.h"
+#include "RoomsList.h"
 
 using namespace WoMU_Lab3;
 using namespace Platform;
@@ -46,7 +47,7 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 	position.Altitude = 0.0;;
 	double radius;
 
-	radius = (room->lengthCm() / 100);
+	radius = (sqrt(room->lengthCm() * room->lengthCm()) + (room->heightCm() * room->heightCm()));
 
 	String^ fencekey = room->title();;
 
@@ -66,15 +67,13 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 }
 
 
-void GeoFence::GenerateAllGeoFences()
+void GeoFence::GenerateAllGeoFences(rooms)
 {
-
 	geofences->Clear();
-	
-	/*foreach(room in local) {
+
+	for (auto room : rooms) {
 		try {
-			auto room = ReadRoomFromStorage();
-			if (room != nullptr) {
+			if (room->title() != "") {
 				Geofence^ geofence = GenerateGeoFence(room);
 
 				geofences->InsertAt(0, geofence);
@@ -83,7 +82,7 @@ void GeoFence::GenerateAllGeoFences()
 		catch (...)
 		{
 		}
-	}*/
+	}
 }
 
 void GeoFence::RegisterBackgroundTask()
