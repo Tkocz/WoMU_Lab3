@@ -28,7 +28,9 @@ using namespace Windows::ApplicationModel::Background;
 using namespace std;
 
 
-GeoFence::GeoFence()
+GeoFence::GeoFence():
+	backgroundTaskName("SampleGeofenceBackgroundTask"),
+	backgroundTaskEntryPoint("BackgroundTask.GeofenceBackgroundTask")
 {
 	geofences = GeofenceMonitor::Current->Geofences;
 
@@ -57,7 +59,7 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 		position.Altitude = 0.0;;
 		double radius;
 
-		radius = (sqrt(room->lengthCm() * room->lengthCm()) + (room->heightCm() * room->heightCm()));
+		radius = (sqrt(room->lengthCm() * room->lengthCm()) + (room->heightCm() * room->heightCm()))*10;
 
 		String^ fencekey = room->title();;
 
@@ -96,7 +98,9 @@ void GeoFence::GenerateAllGeoFences(RoomModel^ rooms[])
 			try {
 				if (room->title() != "") {
 					Geofence^ geofence = GenerateGeoFence(room);
-					OutputDebugString(L"Suck it Putte!");
+					char msgbuf[100] = {0};
+					sprintf(msgbuf, "%ls\n", room->latitude()->Data());
+					OutputDebugStringA(msgbuf);
 					geofences->InsertAt(0, geofence);
 				}
 			}
@@ -171,7 +175,6 @@ void GeoFence::RegisterBackgroundTask()
                 BackgroundTaskBuilder^ geofenceTaskBuilder = ref new BackgroundTaskBuilder();
 
                 geofenceTaskBuilder->Name = "GeoBackgroundTask";
-                //geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.Background";
                 geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.GeofenceBackgroundTask";
 
                 // Create a new location trigger
@@ -179,7 +182,6 @@ void GeoFence::RegisterBackgroundTask()
 
                 // Associate the location trigger with the background task builder
                 geofenceTaskBuilder->SetTrigger(trigger);
-
 
                 // Register the background task
                 geofenceTask = geofenceTaskBuilder->Register();
@@ -200,9 +202,6 @@ void GeoFence::RegisterBackgroundTask()
 					damn = ref new MessageDialog("bgtask registered.");
 					damn->ShowAsync();
 
-					// Need tp request access to location
-					// This must be done with background task registeration
-					// because the background task cannot display UI
 					RequestLocationAccess();
 					break;
 				}
