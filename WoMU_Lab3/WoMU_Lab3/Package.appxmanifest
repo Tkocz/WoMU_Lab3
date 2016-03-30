@@ -21,10 +21,14 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.GeoBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.GeofenceBackgroundTask">
           <BackgroundTasks>
             <Task Type="general" />
-            <Task Type="timer" />
             <Task Type="pushNotification" />
             <Task Type="location" />
           </BackgroundTasks>

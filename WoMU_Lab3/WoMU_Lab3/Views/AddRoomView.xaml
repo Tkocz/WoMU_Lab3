@@ -23,11 +23,11 @@
                 </StackPanel>
                 <TextBox x:Name="detailsBox" HorizontalAlignment="Left" TextWrapping="Wrap" PlaceholderText="Detaljerad Beskrivning" VerticalAlignment="Top" Height="100" Width="300"/>
                 <TextBlock Name="lengthTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Välj rummets längd med slidern!" VerticalAlignment="Top"/>
-                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="1000" ValueChanged="LenghtSliderValueChanged"/>
+                <Slider x:Name="lengthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Minimum="100" Maximum="1000" ValueChanged="LenghtSliderValueChanged"/>
                 <TextBlock Name="widthTextBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Välj rummets bredd med slidern!" VerticalAlignment="Top"/>
-                <Slider x:Name="widthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="1000" ValueChanged="WidthSliderValueChanged"/>
+                <Slider x:Name="widthSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Minimum="100" Maximum="1000" ValueChanged="WidthSliderValueChanged"/>
                 <TextBlock Name="heightTextBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Välj rummet höjd med slider!" VerticalAlignment="Top"/>
-                <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Maximum="500" ValueChanged="HeightSliderValueChanged"/>
+                <Slider x:Name="heightSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="38" Minimum="100" Maximum="500" ValueChanged="HeightSliderValueChanged"/>
                 <StackPanel Orientation="Horizontal" Padding="5" HorizontalAlignment="Center">
                     <Button x:Name="wallButton" Margin="5" Content="Wall 1" Tapped="Wall1ButtonTapped"/>
                     <Button x:Name="wall2Button" Margin="5"  Content="Wall 2" Tapped="Wall2ButtonTapped"/>

@@ -33,7 +33,6 @@ concurrency::task<void> GetRooms(RoomModel^ rooms[])
 
 			LoadRoom(file->Name).then([x, rooms, filename = file->Name](RoomModel^ room) {
 				rooms[x] = room;
-				OutputDebugString(L"BOSSE\n");
 			});
 
 			x++;

@@ -30,6 +30,7 @@ private:
 	Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence^>^ geofences;
 	void RegisterBackgroundTaskOrg(Platform::Object^ sender);
 	Windows::ApplicationModel::Background::BackgroundTaskRegistration^ geofenceTask;
+	Windows::ApplicationModel::Background::BackgroundTaskRegistration^ geolocTask;
 	Windows::Foundation::EventRegistrationToken taskCompletedToken;
 
 };

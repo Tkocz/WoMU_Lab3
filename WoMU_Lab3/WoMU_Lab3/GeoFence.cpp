@@ -29,7 +29,7 @@ using namespace std;
 
 
 GeoFence::GeoFence():
-	backgroundTaskName("SampleGeofenceBackgroundTask"),
+	backgroundTaskName("GeofenceBackgroundTask"),
 	backgroundTaskEntryPoint("BackgroundTask.GeofenceBackgroundTask")
 {
 	geofences = GeofenceMonitor::Current->Geofences;
@@ -58,19 +58,18 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 		position.Longitude = std::stof(room->longitude()->Data());
 		position.Altitude = 0.0;;
 		double radius;
-
-		radius = (sqrt(room->lengthCm() * room->lengthCm()) + (room->heightCm() * room->heightCm()))*10;
+		
+		//Diagonal is d = squareroot of( h^2 + b^2),  radius is half of that
+		radius = (sqrt(room->lengthCm() * room->lengthCm()) + (room->heightCm() * room->heightCm()) / 2 ); 
 
 		String^ fencekey = room->title();;
 
 		MonitoredGeofenceStates mask = static_cast<MonitoredGeofenceStates>(0);
 		mask = mask | MonitoredGeofenceStates::Entered;
-		mask = mask | MonitoredGeofenceStates::Exited;
-
 
 		Geocircle^ geocircle = ref new Geocircle(position, radius);
 		TimeSpan dwelltime;
-		dwelltime.Duration = 100000U;
+		dwelltime.Duration = 10000U;
 		bool singleUse = false;
 
 		geofence = ref new Geofence(fencekey, geocircle, mask, singleUse, dwelltime);
@@ -85,27 +84,25 @@ Windows::Devices::Geolocation::Geofencing::Geofence ^ GeoFence::GenerateGeoFence
 void GeoFence::GenerateAllGeoFences(RoomModel^ rooms[])
 {
 	geofences->Clear();
-
 	concurrency::create_task([rooms, this]() {
 		std::this_thread::sleep_for(1s);
 		for (int i = 0; i < 100; i++) {
 			if (rooms[i] == nullptr)
 				continue;
 
-			OutputDebugString(L"HEJ\n");
 			auto room = rooms[i];
 
 			try {
-				if (room->title() != "") {
+				if (room->title() != "" && room->latitude() != nullptr) {
 					Geofence^ geofence = GenerateGeoFence(room);
-					char msgbuf[100] = {0};
-					sprintf(msgbuf, "%ls\n", room->latitude()->Data());
-					OutputDebugStringA(msgbuf);
 					geofences->InsertAt(0, geofence);
 				}
 			}
-			catch (...)
+			catch (Exception^ ex)
 			{
+				MessageDialog^ damn;
+				damn = ref new MessageDialog(ex->ToString());
+				damn->ShowAsync();
 				continue;
 			}
 		}
@@ -174,7 +171,7 @@ void GeoFence::RegisterBackgroundTask()
                 // Create a new background task builder
                 BackgroundTaskBuilder^ geofenceTaskBuilder = ref new BackgroundTaskBuilder();
 
-                geofenceTaskBuilder->Name = "GeoBackgroundTask";
+                geofenceTaskBuilder->Name = "GeoFenceBackgroundTask";
                 geofenceTaskBuilder->TaskEntryPoint = "BackgroundTask.GeofenceBackgroundTask";
 
                 // Create a new location trigger
@@ -188,6 +185,26 @@ void GeoFence::RegisterBackgroundTask()
 
                 // Register for background task completion notifications
                 taskCompletedToken = geofenceTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
+				
+				/**/
+				// Create a new background task builder
+				BackgroundTaskBuilder^ geolocTaskBuilder = ref new BackgroundTaskBuilder();
+
+				geolocTaskBuilder->Name = "GeoBackgroundTask";
+				geolocTaskBuilder->TaskEntryPoint = "BackgroundTask.GeoBackgroundTask";
+
+				// Create a new timer triggering at a 15 minute interval
+				auto trigger2 = ref new TimeTrigger(15, false);
+
+				// Associate the timer trigger with the background task builder
+				geolocTaskBuilder->SetTrigger(trigger2);
+
+				// Register the background task
+				geolocTask = geolocTaskBuilder->Register();
+
+				// Register for background task completion notifications
+				taskCompletedToken = geolocTask->Completed::add(ref new BackgroundTaskCompletedEventHandler(this, &GeoFence::OnCompleted));
+				/**/
 
 				// Check the background access status of the application and display the appropriate status message
 				switch (backgroundAccessStatus)
@@ -199,8 +216,8 @@ void GeoFence::RegisterBackgroundTask()
 					break;
 
 				default:
-					damn = ref new MessageDialog("bgtask registered.");
-					damn->ShowAsync();
+					//damn = ref new MessageDialog("bgtask registered.");
+					//damn->ShowAsync();
 
 					RequestLocationAccess();
 					break;
